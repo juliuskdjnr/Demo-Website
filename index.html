@@ -1,0 +1,1942 @@
+<!DOCTYPE html>
+<!--
+  ╔══════════════════════════════════════════════════════════╗
+  ║         NEXUS TECH — Modern Product Landing Page         ║
+  ║   Built with plain HTML, CSS & JavaScript (no frameworks)║
+  ╚══════════════════════════════════════════════════════════╝
+
+  FILE STRUCTURE (everything is in this one HTML file):
+  ──────────────────────────────────────────────────────────
+  1. <head>       → Meta tags, Google Fonts, all <style> CSS
+  2. <body>
+       ├── <nav>           Navigation bar + hamburger menu
+       ├── #home           Hero section
+       ├── #products       Product cards grid
+       ├── #about          About / company section
+       ├── #contact        Contact form with JS validation
+       └── <footer>        Social links + copyright
+  3. <script>     → All JavaScript at bottom of <body>
+  ──────────────────────────────────────────────────────────
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Viewport meta tag: makes the page scale correctly on mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexus Tech — Modern Products</title>
+
+  <!-- Google Fonts: Syne (display/headings) + DM Sans (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <!-- ══════════════════════════════════════════════════════
+       CSS — ALL STYLES IN ONE <style> BLOCK
+       ══════════════════════════════════════════════════════ -->
+  <style>
+    /* ──────────────────────────────────────────────
+       CSS CUSTOM PROPERTIES (variables)
+       Define colours & values once, reuse everywhere.
+       Dark-mode swaps these variables — no other changes needed.
+    ────────────────────────────────────────────── */
+    :root {
+      /* Colour palette */
+      --bg-primary:    #0a0e1a;   /* deep navy page background */
+      --bg-secondary:  #111827;   /* slightly lighter navy (cards, sections) */
+      --bg-card:       #141b2d;   /* card backgrounds */
+      --accent:        #00d4ff;   /* electric cyan — primary accent */
+      --accent-glow:   rgba(0, 212, 255, 0.15);
+      --accent-dark:   #0099bb;
+      --text-primary:  #f0f4ff;   /* near-white text */
+      --text-secondary:#8892b0;   /* muted grey text */
+      --border:        rgba(0, 212, 255, 0.12);
+      --shadow:        0 8px 32px rgba(0, 0, 0, 0.4);
+      --nav-height:    72px;
+      --radius:        12px;
+      --transition:    0.3s ease;
+    }
+
+    /* Light mode variable overrides (applied via .light-mode on <body>) */
+    body.light-mode {
+      --bg-primary:    #f0f4ff;
+      --bg-secondary:  #e2e8f8;
+      --bg-card:       #ffffff;
+      --accent:        #0077aa;
+      --accent-glow:   rgba(0, 119, 170, 0.12);
+      --accent-dark:   #005580;
+      --text-primary:  #0d1b2a;
+      --text-secondary:#4a5568;
+      --border:        rgba(0, 119, 170, 0.15);
+      --shadow:        0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ──────────────────────────────────────────────
+       RESET & BASE STYLES
+       Remove browser default margin/padding/box-sizing.
+    ────────────────────────────────────────────── */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box; /* padding/border included in element width */
+    }
+
+    html {
+      scroll-behavior: smooth; /* smooth scrolling for anchor links */
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden; /* prevent horizontal scroll on mobile */
+      transition: background-color var(--transition), color var(--transition);
+    }
+
+    /* Utility: visually-hidden text (for screen readers) */
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       1. NAVIGATION BAR
+       ══════════════════════════════════════════════════════ */
+    nav {
+      position: fixed;          /* stick to top while scrolling */
+      top: 0; left: 0; right: 0;
+      height: var(--nav-height);
+      z-index: 1000;            /* above all other content */
+      /* Glass-morphism effect: semi-transparent + blur */
+      background: rgba(10, 14, 26, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: background var(--transition);
+    }
+
+    body.light-mode nav {
+      background: rgba(240, 244, 255, 0.88);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 100%;
+      display: flex;            /* lay out logo + links side by side */
+      align-items: center;      /* vertically center items */
+      justify-content: space-between;
+    }
+
+    /* Logo */
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .logo span {
+      color: var(--accent); /* highlight the "." in the logo */
+    }
+
+    /* Desktop nav links */
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      display: block;
+      padding: 8px 16px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: color var(--transition), background var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+      background: var(--accent-glow);
+    }
+
+    /* Right-side controls: dark toggle + cart */
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Dark mode toggle button */
+    .theme-toggle {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: border-color var(--transition), transform 0.15s;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      transform: scale(1.05);
+    }
+
+    /* Cart counter badge */
+    .cart-btn {
+      position: relative;
+      background: var(--accent);
+      color: var(--bg-primary);
+      border: none;
+      padding: 8px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: background var(--transition), transform 0.15s;
+    }
+
+    .cart-btn:hover { transform: scale(1.05); }
+
+    .cart-count {
+      position: absolute;
+      top: -8px; right: -8px;
+      background: #ff4757;
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* Hidden when cart is 0 */
+      opacity: 0;
+      transform: scale(0);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    /* JS adds .visible class when count > 0 */
+    .cart-count.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Hamburger menu — hidden on desktop, shown on mobile */
+    .hamburger {
+      display: none;          /* hidden by default (desktop) */
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: transform var(--transition), opacity var(--transition);
+    }
+
+    /* Animate hamburger → X when .open */
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ══════════════════════════════════════════════════════
+       2. HERO SECTION
+       ══════════════════════════════════════════════════════ */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: var(--nav-height);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Decorative background glow blobs */
+    #home::before,
+    #home::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    #home::before {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,212,255,0.07), transparent 70%);
+      top: -100px; right: -100px;
+    }
+
+    #home::after {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(0,212,255,0.05), transparent 70%);
+      bottom: 0; left: -80px;
+    }
+
+    .hero-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 24px;
+      display: grid;
+      /* Two equal columns on desktop */
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 60px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-glow);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      margin-bottom: 24px;
+      letter-spacing: 0.03em;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 1.8s ease infinite; /* pulsing dot */
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.4rem, 5vw, 4rem); /* fluid font size */
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+
+    .hero-title .accent { color: var(--accent); }
+
+    .hero-description {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 480px;
+      margin-bottom: 36px;
+      font-weight: 300;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    /* Primary CTA button */
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg-primary);
+      border: none;
+      padding: 14px 30px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(0, 212, 255, 0.25);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 212, 255, 0.4);
+    }
+
+    /* Secondary ghost button */
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+      padding: 14px 30px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: border-color var(--transition), color var(--transition), transform 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* Hero image / visual panel */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-mockup {
+      width: 100%;
+      max-width: 480px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 30px;
+      box-shadow: var(--shadow), 0 0 60px rgba(0,212,255,0.06);
+      position: relative;
+    }
+
+    /* Floating stat cards on top of the mockup */
+    .hero-stat {
+      position: absolute;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-stat .stat-number {
+      display: block;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .hero-stat:nth-child(1) { top: -20px; left: -20px; }
+    .hero-stat:nth-child(2) { bottom: -20px; right: -20px; }
+
+    /* Large product icon in mockup */
+    .mockup-icon {
+      font-size: 6rem;
+      text-align: center;
+      display: block;
+      margin-bottom: 16px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-10px); }
+    }
+
+    .mockup-label {
+      text-align: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .mockup-sublabel {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-top: 6px;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       3. SECTION SHARED STYLES
+       ══════════════════════════════════════════════════════ */
+    section {
+      padding: 100px 24px;
+    }
+
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-tag {
+      display: inline-block;
+      background: var(--accent-glow);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+
+    .section-subtitle {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       4. PRODUCTS SECTION
+       ══════════════════════════════════════════════════════ */
+    #products {
+      background: var(--bg-secondary);
+    }
+
+    /* Search bar */
+    .search-wrapper {
+      max-width: 480px;
+      margin: 0 auto 40px;
+      position: relative;
+    }
+
+    .search-wrapper::before {
+      content: '🔍';
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1rem;
+      pointer-events: none;
+    }
+
+    #searchInput {
+      width: 100%;
+      padding: 14px 16px 14px 46px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color var(--transition);
+    }
+
+    #searchInput:focus { border-color: var(--accent); }
+    #searchInput::placeholder { color: var(--text-secondary); }
+
+    /* Category filter buttons */
+    .filter-bar {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+
+    .filter-btn {
+      padding: 8px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      transition: all var(--transition);
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--bg-primary);
+    }
+
+    /* Products grid: auto-fill columns, min 280px, max 1fr */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    /* Individual product card */
+    .product-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      position: relative;
+      cursor: pointer;
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 0 1px var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* Category badge overlaid on card image area */
+    .card-category {
+      position: absolute;
+      top: 12px; left: 12px;
+      background: rgba(0,212,255,0.9);
+      color: #0a0e1a;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 100px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .card-image {
+      width: 100%;
+      height: 180px;
+      background: var(--bg-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem; /* emoji product illustration */
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    .card-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .card-description {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-price {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    /* "Add to Cart" button on cards */
+    .card-btn {
+      background: var(--accent-glow);
+      color: var(--accent);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
+      transition: background var(--transition), color var(--transition), transform 0.15s;
+    }
+
+    .card-btn:hover {
+      background: var(--accent);
+      color: var(--bg-primary);
+      transform: scale(1.05);
+    }
+
+    /* "No results" message shown by JS */
+    .no-results {
+      text-align: center;
+      color: var(--text-secondary);
+      padding: 60px 0;
+      font-size: 1rem;
+      grid-column: 1 / -1; /* span full grid width */
+      display: none;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       5. PRODUCT DETAIL POPUP / MODAL
+       ══════════════════════════════════════════════════════ -->
+    /* Semi-transparent overlay behind modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0; /* shorthand for top/right/bottom/left: 0 */
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(6px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none; /* ignore clicks when hidden */
+      transition: opacity var(--transition);
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px;
+      max-width: 520px;
+      width: 100%;
+      position: relative;
+      transform: scale(0.9) translateY(20px);
+      transition: transform var(--transition);
+    }
+
+    .modal-overlay.active .modal { transform: scale(1) translateY(0); }
+
+    .modal-close {
+      position: absolute;
+      top: 16px; right: 16px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color var(--transition), border-color var(--transition);
+    }
+
+    .modal-close:hover { color: var(--accent); border-color: var(--accent); }
+
+    .modal-icon { font-size: 4rem; margin-bottom: 16px; display: block; }
+
+    .modal-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .modal-price {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--accent);
+      font-family: 'Syne', sans-serif;
+      margin-bottom: 14px;
+    }
+
+    .modal-desc {
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+
+    .modal-add-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--accent);
+      color: var(--bg-primary);
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .modal-add-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,212,255,0.3);
+    }
+
+    /* ══════════════════════════════════════════════════════
+       6. ABOUT SECTION
+       ══════════════════════════════════════════════════════ */
+    #about {
+      background: var(--bg-primary);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .about-visual {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .about-icon {
+      font-size: 5rem;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .stat-box {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 8px;
+      text-align: center;
+    }
+
+    .stat-box .num {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--accent);
+      display: block;
+    }
+
+    .stat-box .lbl {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .about-content .section-tag { text-align: left; }
+
+    .about-content .section-title {
+      text-align: left;
+      margin-bottom: 16px;
+    }
+
+    .about-text {
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      line-height: 1.8;
+    }
+
+    /* Feature list */
+    .features-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .features-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.95rem;
+    }
+
+    .feat-icon {
+      width: 28px; height: 28px;
+      background: var(--accent-glow);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       7. CONTACT SECTION
+       ══════════════════════════════════════════════════════ */
+    #contact { background: var(--bg-secondary); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .contact-info { padding-top: 8px; }
+
+    .contact-info .section-title { text-align: left; }
+    .contact-info .section-tag { text-align: left; }
+
+    .contact-desc {
+      color: var(--text-secondary);
+      margin: 16px 0 32px;
+      line-height: 1.7;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 0.9rem;
+    }
+
+    .contact-item-icon {
+      width: 40px; height: 40px;
+      background: var(--accent-glow);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    /* Contact form card */
+    .contact-form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    /* Shared input/textarea styles */
+    .form-control {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color var(--transition);
+    }
+
+    .form-control:focus { border-color: var(--accent); }
+    .form-control::placeholder { color: var(--text-secondary); }
+
+    /* Mark input as invalid (JS adds .error class) */
+    .form-control.error { border-color: #ff4757; }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    /* Inline error text shown below invalid inputs */
+    .error-msg {
+      color: #ff4757;
+      font-size: 0.78rem;
+      margin-top: 6px;
+      display: none; /* hidden until error occurs */
+    }
+
+    .error-msg.show { display: block; }
+
+    /* Success toast notification */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--bg-card);
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      padding: 16px 24px;
+      color: var(--text-primary);
+      box-shadow: var(--shadow);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9rem;
+      transform: translateX(120%);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .toast.show { transform: translateX(0); }
+    .toast-icon { font-size: 1.4rem; }
+
+    /* ══════════════════════════════════════════════════════
+       8. FOOTER
+       ══════════════════════════════════════════════════════ */
+    footer {
+      background: var(--bg-primary);
+      border-top: 1px solid var(--border);
+      padding: 48px 24px;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-brand .logo {
+      display: inline-block;
+      margin-bottom: 14px;
+    }
+
+    .footer-brand p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    /* Social media icon links */
+    .social-links {
+      display: flex;
+      gap: 10px;
+    }
+
+    .social-link {
+      width: 38px; height: 38px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 1rem;
+      transition: border-color var(--transition), color var(--transition), transform 0.2s;
+    }
+
+    .social-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .footer-col h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-col ul li a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: color var(--transition);
+    }
+
+    .footer-col ul li a:hover { color: var(--accent); }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.83rem;
+      color: var(--text-secondary);
+    }
+
+    /* ══════════════════════════════════════════════════════
+       9. RESPONSIVE — MOBILE STYLES
+       Apply below 768px screen width
+       ══════════════════════════════════════════════════════ */
+    @media (max-width: 768px) {
+
+      /* Show hamburger, hide desktop links */
+      .hamburger { display: flex; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: var(--nav-height);
+        left: 0; right: 0;
+        background: var(--bg-secondary);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        padding: 16px 24px;
+        gap: 4px;
+      }
+
+      /* JS adds .open to show mobile menu */
+      .nav-links.open { display: flex; }
+
+      /* Hero: stack columns vertically */
+      .hero-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 60px 24px;
+      }
+
+      .hero-description { max-width: 100%; }
+
+      .hero-buttons { justify-content: center; }
+
+      .hero-visual { display: none; } /* hide visual panel on small screens */
+
+      /* About: stack columns */
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      /* Contact: stack columns */
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      /* Footer: 2-column on mobile, single brand column */
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .footer-brand {
+        grid-column: 1 / -1; /* span full width */
+      }
+
+      section { padding: 64px 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .footer-top { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════════════════════
+       NAVIGATION BAR
+       Semantic: <nav> wraps all navigation content.
+  ════════════════════════════════════════════════════ -->
+  <nav aria-label="Main navigation">
+    <div class="nav-container">
+
+      <!-- Logo: anchor links back to #home -->
+      <a href="#home" class="logo">Nexus<span>.</span>Tech</a>
+
+      <!-- Desktop nav links — <ul> is a list of links (semantic) -->
+      <ul class="nav-links" id="navLinks" role="list">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <!-- Right-side controls -->
+      <div class="nav-controls">
+        <!-- FEATURE 1: Dark / Light mode toggle -->
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode" title="Toggle theme">
+          🌙
+        </button>
+
+        <!-- FEATURE 3: Cart counter -->
+        <button class="cart-btn" id="cartBtn" aria-label="View cart">
+          🛒 Cart
+          <span class="cart-count" id="cartCount" aria-live="polite">0</span>
+        </button>
+
+        <!-- Hamburger — visible on mobile -->
+        <button class="hamburger" id="hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ════════════════════════════════════════════════════
+       HERO SECTION
+       <section> = a thematic grouping of content.
+  ════════════════════════════════════════════════════ -->
+  <section id="home" aria-label="Hero">
+    <div class="hero-container">
+
+      <!-- Left: text content -->
+      <div class="hero-content">
+        <div class="hero-badge">New arrivals just dropped</div>
+
+        <h1 class="hero-title">
+          Discover<br/>
+          <span class="accent">Modern Tech</span><br/>
+          Products
+        </h1>
+
+        <p class="hero-description">
+          Premium gadgets and cutting-edge technology curated for curious minds.
+          Quality you can trust, prices that make sense.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#products" class="btn-primary">Shop Now →</a>
+          <a href="#about" class="btn-secondary">Learn More</a>
+        </div>
+      </div>
+
+      <!-- Right: decorative mockup panel -->
+      <div class="hero-visual">
+        <div class="hero-mockup">
+          <!-- Floating stat cards -->
+          <div class="hero-stat">
+            <span class="stat-number">500+</span>
+            Happy customers
+          </div>
+          <div class="hero-stat">
+            <span class="stat-number">4.9★</span>
+            Average rating
+          </div>
+
+          <span class="mockup-icon">🖥️</span>
+          <div class="mockup-label">Nexus Pro Display</div>
+          <div class="mockup-sublabel">4K · 144Hz · OLED</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       PRODUCTS SECTION
+  ════════════════════════════════════════════════════ -->
+  <section id="products" aria-label="Products">
+    <div class="section-container">
+
+      <div class="section-header">
+        <span class="section-tag">Our Collection</span>
+        <h2 class="section-title">Featured Products</h2>
+        <p class="section-subtitle">Hand-picked tech essentials for every setup and budget.</p>
+      </div>
+
+      <!-- FEATURE 2: Search bar (filters products live) -->
+      <div class="search-wrapper">
+        <input
+          type="search"
+          id="searchInput"
+          placeholder="Search products…"
+          aria-label="Search products"
+          autocomplete="off"
+        />
+      </div>
+
+      <!-- FEATURE: Category filter buttons -->
+      <div class="filter-bar" role="group" aria-label="Filter by category">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="display">Display</button>
+        <button class="filter-btn" data-filter="audio">Audio</button>
+        <button class="filter-btn" data-filter="input">Input</button>
+        <button class="filter-btn" data-filter="mobile">Mobile</button>
+        <button class="filter-btn" data-filter="accessories">Accessories</button>
+      </div>
+
+      <!-- Product cards are inserted here by JavaScript -->
+      <div class="products-grid" id="productsGrid">
+        <p class="no-results" id="noResults">
+          No products match your search. Try a different keyword.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       PRODUCT DETAIL MODAL (popup)
+       Hidden by default; JS reveals it when "View More" is clicked.
+  ════════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalName">
+    <div class="modal">
+      <button class="modal-close" id="modalClose" aria-label="Close modal">✕</button>
+      <span class="modal-icon" id="modalIcon"></span>
+      <div class="modal-name"  id="modalName"></div>
+      <div class="modal-price" id="modalPrice"></div>
+      <p  class="modal-desc"   id="modalDesc"></p>
+      <button class="modal-add-btn" id="modalAddBtn">Add to Cart 🛒</button>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════
+       ABOUT SECTION
+  ════════════════════════════════════════════════════ -->
+  <section id="about" aria-label="About us">
+    <div class="section-container">
+      <div class="about-grid">
+
+        <!-- Visual / stats panel -->
+        <div class="about-visual">
+          <span class="about-icon">🚀</span>
+          <h3 style="font-family:'Syne',sans-serif; font-size:1.3rem; margin-bottom:8px;">Built for the future</h3>
+          <p style="color:var(--text-secondary); font-size:0.9rem;">Bringing premium technology to every home and workspace.</p>
+          <div class="stats-row">
+            <div class="stat-box">
+              <span class="num">6+</span>
+              <span class="lbl">Years Active</span>
+            </div>
+            <div class="stat-box">
+              <span class="num">500+</span>
+              <span class="lbl">Customers</span>
+            </div>
+            <div class="stat-box">
+              <span class="num">50+</span>
+              <span class="lbl">Products</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text content -->
+        <div class="about-content">
+          <span class="section-tag">Our Story</span>
+          <h2 class="section-title">Technology that works<br/>for everyone</h2>
+
+          <p class="about-text">
+            Nexus Tech was founded with a simple belief: premium technology
+            shouldn't be out of reach. We source, curate, and deliver the best
+            gadgets — from flagship displays to everyday accessories — at fair prices.
+          </p>
+          <p class="about-text">
+            Our team of engineers and designers rigorously tests every product
+            before it ever reaches our catalogue. If it doesn't pass our standards,
+            it doesn't ship.
+          </p>
+
+          <ul class="features-list">
+            <li>
+              <span class="feat-icon">✓</span>
+              <div><strong>Quality Guarantee</strong> — Every product is tested before listing.</div>
+            </li>
+            <li>
+              <span class="feat-icon">🚚</span>
+              <div><strong>Fast Delivery</strong> — Nationwide shipping within 48 hours.</div>
+            </li>
+            <li>
+              <span class="feat-icon">🔄</span>
+              <div><strong>Easy Returns</strong> — 30-day hassle-free return policy.</div>
+            </li>
+            <li>
+              <span class="feat-icon">💬</span>
+              <div><strong>24/7 Support</strong> — Real humans available around the clock.</div>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       CONTACT SECTION
+  ════════════════════════════════════════════════════ -->
+  <section id="contact" aria-label="Contact us">
+    <div class="section-container">
+      <div class="contact-grid">
+
+        <!-- Left: info -->
+        <div class="contact-info">
+          <span class="section-tag">Get in Touch</span>
+          <h2 class="section-title">We'd love to hear from you</h2>
+          <p class="contact-desc">
+            Have a question about a product? Need help with an order?
+            Our team typically responds within 2 hours on business days.
+          </p>
+
+          <div class="contact-details">
+            <div class="contact-item">
+              <span class="contact-item-icon">📧</span>
+              <div>
+                <strong>Email</strong><br/>
+                <span style="color:var(--text-secondary);font-size:0.9rem;">hello@nexustech.io</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <span class="contact-item-icon">📞</span>
+              <div>
+                <strong>Phone</strong><br/>
+                <span style="color:var(--text-secondary);font-size:0.9rem;">+233 20 000 0000</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <span class="contact-item-icon">📍</span>
+              <div>
+                <strong>Location</strong><br/>
+                <span style="color:var(--text-secondary);font-size:0.9rem;">Accra, Ghana</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: contact form -->
+        <div class="contact-form-card">
+          <!-- novalidate = disable browser's default validation; we do it in JS -->
+          <form id="contactForm" novalidate>
+
+            <div class="form-group">
+              <label for="formName">Full Name *</label>
+              <input
+                type="text"
+                id="formName"
+                class="form-control"
+                placeholder="e.g. Kwame Mensah"
+                autocomplete="name"
+              />
+              <span class="error-msg" id="nameError">Please enter your full name.</span>
+            </div>
+
+            <div class="form-group">
+              <label for="formEmail">Email Address *</label>
+              <input
+                type="email"
+                id="formEmail"
+                class="form-control"
+                placeholder="e.g. kwame@email.com"
+                autocomplete="email"
+              />
+              <span class="error-msg" id="emailError">Please enter a valid email address.</span>
+            </div>
+
+            <div class="form-group">
+              <label for="formMessage">Message *</label>
+              <textarea
+                id="formMessage"
+                class="form-control"
+                placeholder="Tell us how we can help…"
+              ></textarea>
+              <span class="error-msg" id="messageError">Message must be at least 10 characters.</span>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width:100%; justify-content:center;">
+              Send Message ✉️
+            </button>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       FOOTER
+       <footer> = semantic tag for page/section footer.
+  ════════════════════════════════════════════════════ -->
+  <footer>
+    <div class="footer-container">
+
+      <div class="footer-top">
+
+        <!-- Brand column -->
+        <div class="footer-brand">
+          <a href="#home" class="logo">Nexus<span>.</span>Tech</a>
+          <p>Premium technology products for curious minds.<br/>Built for quality. Priced for everyone.</p>
+
+          <!-- Social media links -->
+          <div class="social-links" aria-label="Social media links">
+            <!-- Using text emoji as icons; a real project would use SVG icons -->
+            <a href="#" class="social-link" aria-label="Twitter / X">𝕏</a>
+            <a href="#" class="social-link" aria-label="Instagram">📸</a>
+            <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+            <a href="#" class="social-link" aria-label="YouTube">▶</a>
+            <a href="#" class="social-link" aria-label="GitHub">⌥</a>
+          </div>
+        </div>
+
+        <!-- Link columns -->
+        <div class="footer-col">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="#products">All Products</a></li>
+            <li><a href="#products">Displays</a></li>
+            <li><a href="#products">Audio</a></li>
+            <li><a href="#products">Accessories</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Shipping</a></li>
+            <li><a href="#">Returns</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="footer-bottom">
+        <span>© 2026 Nexus Tech. All rights reserved.</span>
+        <span>Made with ❤️ in Ghana 🇬🇭</span>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- Toast notification (shown after form submit) -->
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <span class="toast-icon">✅</span>
+    <div>
+      <strong>Message sent!</strong><br/>
+      <span style="font-size:0.82rem;color:var(--text-secondary)">We'll get back to you within 2 hours.</span>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       JAVASCRIPT — placed at the END of <body> so the
+       HTML elements above are already loaded before the
+       script tries to find them with getElementById etc.
+  ══════════════════════════════════════════════════════ -->
+  <script>
+    /* ═══════════════════════════════════════════════════
+       DATA — Product catalogue
+       An array of objects. Each object = one product.
+       We use this to build the card HTML dynamically.
+    ═══════════════════════════════════════════════════ */
+    const products = [
+      {
+        id: 1,
+        name: "Nexus Pro Display 4K",
+        category: "display",
+        price: "$649",
+        priceNum: 649,
+        emoji: "🖥️",
+        description: "27\" OLED panel with 144Hz refresh rate and Delta-E < 1 colour accuracy. Perfect for creators.",
+        fullDesc: "The Nexus Pro Display 4K delivers studio-grade colour in a sleek aluminium chassis. Features USB-C 90W charging, KVM switch, and VESA compatibility. A complete workstation upgrade."
+      },
+      {
+        id: 2,
+        name: "Nexus ANC Headphones",
+        category: "audio",
+        price: "$199",
+        priceNum: 199,
+        emoji: "🎧",
+        description: "40dB active noise cancellation, 30h battery, premium leather ear cups.",
+        fullDesc: "Block out the world with 40dB ANC and lose yourself in studio-quality audio. The Nexus ANC headphones fold flat, include a carry case, and connect to 3 devices simultaneously."
+      },
+      {
+        id: 3,
+        name: "Mechanical Keyboard Pro",
+        category: "input",
+        price: "$129",
+        priceNum: 129,
+        emoji: "⌨️",
+        description: "TKL layout, hot-swap sockets, per-key RGB. Compatible with Mac & Windows.",
+        fullDesc: "Hot-swappable switches let you customise your typing feel without soldering. Ships with Gateron Red switches and includes a switch puller. USB-C braided cable included."
+      },
+      {
+        id: 4,
+        name: "Nexus Phone 15 Ultra",
+        category: "mobile",
+        price: "$999",
+        priceNum: 999,
+        emoji: "📱",
+        description: "6.7\" AMOLED, 200MP camera system, 5000mAh battery, 100W charging.",
+        fullDesc: "Engineered for power users. The Nexus Phone 15 Ultra packs a Snapdragon 8 Gen 3 chip, satellite connectivity, and IP68 water resistance. Ships with a 100W charger in the box."
+      },
+      {
+        id: 5,
+        name: "Precision Mouse X1",
+        category: "input",
+        price: "$79",
+        priceNum: 79,
+        emoji: "🖱️",
+        description: "26,000 DPI optical sensor, 8 programmable buttons, 2.4GHz wireless.",
+        fullDesc: "Designed for precision. The X1 uses a HERO 25K sensor with zero smoothing, acceleration, or filtering at any DPI level. Lightweight polycarbonate shell at just 61g."
+      },
+      {
+        id: 6,
+        name: "USB-C Hub Pro 12-in-1",
+        category: "accessories",
+        price: "$59",
+        priceNum: 59,
+        emoji: "🔌",
+        description: "Dual 4K HDMI, 100W PD, SD/MicroSD, 3×USB-A, Ethernet, 3.5mm audio.",
+        fullDesc: "Turn one USB-C port into a full workstation. The Hub Pro 12-in-1 supports dual monitor output, 4K@60Hz, and simultaneously charges your laptop at 100W. Aluminum housing dissipates heat efficiently."
+      },
+      {
+        id: 7,
+        name: "Studio Webcam 4K",
+        category: "accessories",
+        price: "$149",
+        priceNum: 149,
+        emoji: "📷",
+        description: "4K@60fps, auto-framing AI, dual noise-cancelling mics, HDR support.",
+        fullDesc: "Built-in AI keeps you centred automatically during calls. The wide-angle lens captures your whole workspace, while dual mics filter keyboard clicks and background noise. Works with any conferencing app."
+      },
+      {
+        id: 8,
+        name: "Nexus Buds Pro",
+        category: "audio",
+        price: "$89",
+        priceNum: 89,
+        emoji: "🎵",
+        description: "True wireless, IPX5 water resistant, 8h battery + 32h case, spatial audio.",
+        fullDesc: "Nexus Buds Pro fit securely for workouts and stay connected up to 30m. Transparency mode lets you hear your surroundings without removing the buds. Wireless charging case included."
+      },
+      {
+        id: 9,
+        name: "Curved Gaming Monitor",
+        category: "display",
+        price: "$449",
+        priceNum: 449,
+        emoji: "🖥️",
+        description: "32\" 1440p VA panel, 165Hz, 1ms MPRT, FreeSync Premium Pro.",
+        fullDesc: "The 1500R curve wraps your field of view for maximum immersion. Variable refresh rate eliminates screen tearing across AMD and NVIDIA cards. Includes tilt, swivel, and height adjustment stand."
+      }
+    ];
+
+    /* ═══════════════════════════════════════════════════
+       STATE — track runtime data
+    ═══════════════════════════════════════════════════ */
+    let cartCount    = 0;        // how many items in cart
+    let activeFilter = 'all';    // which category filter is selected
+    let searchQuery  = '';       // current search text
+    let currentProductId = null; // which product is open in modal
+
+    /* ═══════════════════════════════════════════════════
+       DOM REFERENCES — grab elements once, use everywhere
+       document.getElementById() finds an element by id=""
+    ═══════════════════════════════════════════════════ */
+    const hamburger    = document.getElementById('hamburger');
+    const navLinks     = document.getElementById('navLinks');
+    const themeToggle  = document.getElementById('themeToggle');
+    const searchInput  = document.getElementById('searchInput');
+    const productsGrid = document.getElementById('productsGrid');
+    const noResults    = document.getElementById('noResults');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalClose   = document.getElementById('modalClose');
+    const cartBtn      = document.getElementById('cartBtn');
+    const cartCountEl  = document.getElementById('cartCount');
+    const contactForm  = document.getElementById('contactForm');
+    const toast        = document.getElementById('toast');
+
+    /* ═══════════════════════════════════════════════════
+       FEATURE 1: DARK / LIGHT MODE TOGGLE
+       Toggles .light-mode class on <body>.
+       CSS variables handle all colour changes automatically.
+    ═══════════════════════════════════════════════════ */
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+      // Update button emoji to match current mode
+      const isLight = document.body.classList.contains('light-mode');
+      themeToggle.textContent = isLight ? '☀️' : '🌙';
+    });
+
+    /* ═══════════════════════════════════════════════════
+       MOBILE HAMBURGER MENU
+       Toggles .open class on both the button and the nav list.
+    ═══════════════════════════════════════════════════ */
+    hamburger.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open'); // toggle returns new state
+      hamburger.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen); // for accessibility
+    });
+
+    // Close mobile menu when a nav link is tapped
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    /* ═══════════════════════════════════════════════════
+       RENDER PRODUCTS
+       Builds HTML card for each product and inserts into the grid.
+       Called whenever search text or filter category changes.
+    ═══════════════════════════════════════════════════ */
+    function renderProducts() {
+      // 1. Filter the products array based on category + search query
+      const filtered = products.filter(p => {
+        const matchesFilter = activeFilter === 'all' || p.category === activeFilter;
+        // .toLowerCase() makes search case-insensitive
+        const matchesSearch = p.name.toLowerCase().includes(searchQuery) ||
+                              p.description.toLowerCase().includes(searchQuery);
+        return matchesFilter && matchesSearch;
+      });
+
+      // 2. Clear existing cards (but keep the no-results message element)
+      productsGrid.querySelectorAll('.product-card').forEach(card => card.remove());
+
+      // 3. Show/hide "no results" message
+      noResults.style.display = filtered.length === 0 ? 'block' : 'none';
+
+      // 4. Create and insert a card for each matching product
+      filtered.forEach(product => {
+        const card = document.createElement('article'); // <article> = self-contained content
+        card.className = 'product-card';
+        card.setAttribute('data-id', product.id);  // store id for click handler
+
+        // innerHTML builds the card's inner HTML from our product data
+        card.innerHTML = `
+          <span class="card-category">${product.category}</span>
+          <div class="card-image">${product.emoji}</div>
+          <div class="card-body">
+            <h3 class="card-name">${product.name}</h3>
+            <p class="card-description">${product.description}</p>
+            <div class="card-footer">
+              <span class="card-price">${product.price}</span>
+              <button class="card-btn view-btn">View More</button>
+            </div>
+          </div>
+        `;
+
+        // Click on the card → open modal
+        card.addEventListener('click', () => openModal(product.id));
+
+        productsGrid.insertBefore(card, noResults); // insert before the no-results message
+      });
+    }
+
+    /* ═══════════════════════════════════════════════════
+       FEATURE 2: SEARCH PRODUCTS
+       'input' event fires on every keystroke.
+    ═══════════════════════════════════════════════════ */
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.toLowerCase().trim();
+      renderProducts();
+    });
+
+    /* ═══════════════════════════════════════════════════
+       FEATURE: FILTER BY CATEGORY
+       Event delegation: listen on parent, check which button was clicked.
+    ═══════════════════════════════════════════════════ */
+    document.querySelector('.filter-bar').addEventListener('click', (e) => {
+      // e.target = the element that was actually clicked
+      if (!e.target.classList.contains('filter-btn')) return;
+
+      // Update active state visually
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      e.target.classList.add('active');
+
+      activeFilter = e.target.dataset.filter; // read data-filter="..." attribute
+      renderProducts();
+    });
+
+    /* ═══════════════════════════════════════════════════
+       FEATURE: PRODUCT DETAIL MODAL (show/hide popup)
+    ═══════════════════════════════════════════════════ */
+    function openModal(productId) {
+      const product = products.find(p => p.id === productId); // find product by id
+      if (!product) return;
+
+      currentProductId = productId;
+
+      // Populate modal fields
+      document.getElementById('modalIcon').textContent  = product.emoji;
+      document.getElementById('modalName').textContent  = product.name;
+      document.getElementById('modalPrice').textContent = product.price;
+      document.getElementById('modalDesc').textContent  = product.fullDesc;
+
+      modalOverlay.classList.add('active'); // CSS transition fades it in
+      document.body.style.overflow = 'hidden'; // prevent background scrolling
+    }
+
+    function closeModal() {
+      modalOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+      currentProductId = null;
+    }
+
+    // Close modal: X button
+    modalClose.addEventListener('click', closeModal);
+
+    // Close modal: click outside the modal box (on overlay)
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) closeModal(); // only if clicking overlay itself
+    });
+
+    // Close modal: Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    /* ═══════════════════════════════════════════════════
+       FEATURE 3: ADD TO CART COUNTER
+       Increments count and animates the badge.
+    ═══════════════════════════════════════════════════ */
+    function addToCart() {
+      cartCount++;
+      cartCountEl.textContent = cartCount;
+      cartCountEl.classList.add('visible'); // show badge
+
+      // Visual pop animation (bump scale up then back)
+      cartBtn.style.transform = 'scale(1.15)';
+      setTimeout(() => { cartBtn.style.transform = ''; }, 200);
+
+      closeModal(); // close modal after adding
+    }
+
+    document.getElementById('modalAddBtn').addEventListener('click', addToCart);
+
+    /* ═══════════════════════════════════════════════════
+       FEATURE: CONTACT FORM VALIDATION
+       Checks fields on submit, shows error messages if invalid.
+    ═══════════════════════════════════════════════════ */
+
+    // Helper: show or clear error for a field
+    function setError(inputId, errorId, condition) {
+      const input = document.getElementById(inputId);
+      const error = document.getElementById(errorId);
+      if (condition) {
+        input.classList.add('error');
+        error.classList.add('show');
+        return false; // field is invalid
+      } else {
+        input.classList.remove('error');
+        error.classList.remove('show');
+        return true;  // field is valid
+      }
+    }
+
+    // Helper: validate email using a regular expression (regex)
+    // Regex pattern means: something@something.something
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault(); // stop page reload (default form behaviour)
+
+      const name    = document.getElementById('formName').value.trim();
+      const email   = document.getElementById('formEmail').value.trim();
+      const message = document.getElementById('formMessage').value.trim();
+
+      // Validate each field and collect results
+      const nameOk    = setError('formName',    'nameError',    name === '');
+      const emailOk   = setError('formEmail',   'emailError',   !isValidEmail(email));
+      const messageOk = setError('formMessage', 'messageError', message.length < 10);
+
+      // Only proceed if ALL fields pass validation
+      if (nameOk && emailOk && messageOk) {
+        contactForm.reset();          // clear the form
+        showToast();                  // show success notification
+      }
+    });
+
+    // Clear error styling as user types (live feedback)
+    ['formName', 'formEmail', 'formMessage'].forEach(id => {
+      document.getElementById(id).addEventListener('input', function () {
+        this.classList.remove('error');
+        // Hide error message for this field
+        const errEl = document.getElementById(id.replace('form', '').toLowerCase() + 'Error');
+        if (errEl) errEl.classList.remove('show');
+      });
+    });
+
+    /* ═══════════════════════════════════════════════════
+       TOAST NOTIFICATION
+       Slides in for 3 seconds then slides out.
+    ═══════════════════════════════════════════════════ */
+    function showToast() {
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3500); // hide after 3.5 seconds
+    }
+
+    /* ═══════════════════════════════════════════════════
+       INITIAL RENDER
+       Build the product grid when the page first loads.
+    ═══════════════════════════════════════════════════ */
+    renderProducts();
+  </script>
+
+</body>
+</html>
