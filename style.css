@@ -206,9 +206,9 @@ body.light-mode nav { background: rgba(240, 244, 255, 0.88); }
 .hamburger.open span:nth-child(2) { opacity: 0; }
 .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* ══════════════════════════════════════════════════════
+/*
    2. HERO SECTION
-   ══════════════════════════════════════════════════════ */
+*/
 #home {
   min-height: 100vh;
   display: flex;
@@ -413,9 +413,9 @@ body.light-mode nav { background: rgba(240, 244, 255, 0.88); }
   margin-top: 6px;
 }
 
-/* ══════════════════════════════════════════════════════
+/*
    3. SECTION SHARED STYLES
-   ══════════════════════════════════════════════════════ */
+*/
 section { padding: 100px 24px; }
 
 .section-container {

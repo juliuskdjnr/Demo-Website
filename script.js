@@ -1,10 +1,10 @@
-/* ============================================================
-   script.js — Nexus Tech Landing Page
+/*
+   script.js — KD's Tech Landing Page
    How JS links to HTML:
      In index.html (bottom of <body>) → <script src="script.js"></script>
    Placing it at the BOTTOM ensures all HTML elements exist
    before this script tries to find them.
-   ============================================================ */
+*/
 const products = [
   {
     id: 1,
