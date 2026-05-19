@@ -12,51 +12,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Viewport meta tag: makes the page scale correctly on mobile -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nexus Tech — Modern Products</title>
+  <title>KD's Tech — Modern Products</title>
 
-  <!-- Google Fonts: Syne (display/headings) + DM Sans (body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
 
-  <!--
-    External CSS file link.
-    rel="stylesheet" tells the browser this is a CSS file.
-    href="style.css" means style.css must be in the SAME folder as index.html.
-  -->
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-
-  <!-- ════════════════════════════════════════════════════
-       NAVIGATION BAR
-       Semantic: <nav> wraps all navigation content.
-  ════════════════════════════════════════════════════ -->
-  <nav aria-label="Main navigation">
+    <nav aria-label="Main navigation">
     <div class="nav-container">
 
-      <!-- Logo: anchor links back to #home -->
-      <a href="#home" class="logo">Nexus<span>.</span>Tech</a>
+      <a href="#home" class="logo">KD's<span>.</span>Tech</a>
 
-      <!-- Desktop nav links — <ul> is a list of links (semantic) -->
       <ul class="nav-links" id="navLinks" role="list">
         <li><a href="#home">Home</a></li>
         <li><a href="#products">Products</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#contact">Contact</a></li>
-      </ul>
+      </ul> <!-- Lists of anchor tags created. -->
 
-      <!-- Right-side controls -->
       <div class="nav-controls">
-        <!-- Dark / Light mode toggle (controlled by script.js) -->
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode" title="Toggle theme">
           🌙
         </button>
 
-        <!-- Cart button with counter badge -->
         <button class="cart-btn" id="cartBtn" aria-label="View cart">
           🛒 Cart
           <span class="cart-count" id="cartCount" aria-live="polite">0</span>
@@ -73,14 +56,8 @@
     </div>
   </nav>
 
-
-  <!-- ════════════════════════════════════════════════════
-       HERO SECTION
-       <section> = a thematic grouping of content.
-  ════════════════════════════════════════════════════ -->
   <section id="home" aria-label="Hero">
     <div class="hero-container">
-
       <!-- Left: text content -->
       <div class="hero-content">
         <div class="hero-badge">New arrivals just dropped</div>
@@ -105,7 +82,6 @@
       <!-- Right: decorative mockup panel -->
       <div class="hero-visual">
         <div class="hero-mockup">
-          <!-- Floating stat cards -->
           <div class="hero-stat">
             <span class="stat-number">500+</span>
             Happy customers
@@ -124,10 +100,6 @@
     </div>
   </section>
 
-
-  <!-- ════════════════════════════════════════════════════
-       PRODUCTS SECTION
-  ════════════════════════════════════════════════════ -->
   <section id="products" aria-label="Products">
     <div class="section-container">
 
@@ -137,7 +109,6 @@
         <p class="section-subtitle">Hand-picked tech essentials for every setup and budget.</p>
       </div>
 
-      <!-- Search bar — script.js listens to this input -->
       <div class="search-wrapper">
         <input
           type="search"
@@ -148,7 +119,6 @@
         />
       </div>
 
-      <!-- Category filter buttons — script.js reads data-filter attribute -->
       <div class="filter-bar" role="group" aria-label="Filter by category">
         <button class="filter-btn active" data-filter="all">All</button>
         <button class="filter-btn" data-filter="display">Display</button>
@@ -158,7 +128,6 @@
         <button class="filter-btn" data-filter="accessories">Accessories</button>
       </div>
 
-      <!-- Product cards are injected here by script.js renderProducts() -->
       <div class="products-grid" id="productsGrid">
         <p class="no-results" id="noResults">
           No products match your search. Try a different keyword.
@@ -168,11 +137,6 @@
     </div>
   </section>
 
-
-  <!-- ════════════════════════════════════════════════════
-       PRODUCT DETAIL MODAL (popup)
-       Hidden by default via CSS. script.js adds .active to show it.
-  ════════════════════════════════════════════════════ -->
   <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalName">
     <div class="modal">
       <button class="modal-close" id="modalClose" aria-label="Close modal">✕</button>
@@ -185,9 +149,6 @@
   </div>
 
 
-  <!-- ════════════════════════════════════════════════════
-       ABOUT SECTION
-  ════════════════════════════════════════════════════ -->
   <section id="about" aria-label="About us">
     <div class="section-container">
       <div class="about-grid">
@@ -213,7 +174,6 @@
           </div>
         </div>
 
-        <!-- Text content -->
         <div class="about-content">
           <span class="section-tag">Our Story</span>
           <h2 class="section-title">Technology that works<br/>for everyone</h2>
@@ -253,10 +213,6 @@
     </div>
   </section>
 
-
-  <!-- ════════════════════════════════════════════════════
-       CONTACT SECTION
-  ════════════════════════════════════════════════════ -->
   <section id="contact" aria-label="Contact us">
     <div class="section-container">
       <div class="contact-grid">
@@ -297,7 +253,6 @@
 
         <!-- Right: contact form -->
         <div class="contact-form-card">
-          <!-- novalidate disables browser default validation; script.js handles it -->
           <form id="contactForm" novalidate>
 
             <div class="form-group">
@@ -345,22 +300,15 @@
     </div>
   </section>
 
-
-  <!-- ════════════════════════════════════════════════════
-       FOOTER
-       <footer> = semantic tag for page/section footer.
-  ════════════════════════════════════════════════════ -->
   <footer>
     <div class="footer-container">
 
       <div class="footer-top">
 
-        <!-- Brand column -->
         <div class="footer-brand">
           <a href="#home" class="logo">Nexus<span>.</span>Tech</a>
           <p>Premium technology products for curious minds.<br/>Built for quality. Priced for everyone.</p>
 
-          <!-- Social media links -->
           <div class="social-links" aria-label="Social media links">
             <a href="#" class="social-link" aria-label="Twitter / X">𝕏</a>
             <a href="#" class="social-link" aria-label="Instagram">📸</a>
@@ -370,7 +318,6 @@
           </div>
         </div>
 
-        <!-- Link columns -->
         <div class="footer-col">
           <h4>Products</h4>
           <ul>
@@ -403,7 +350,6 @@
 
       </div>
 
-      <!-- Bottom bar -->
       <div class="footer-bottom">
         <span>© 2026 Nexus Tech. All rights reserved.</span>
         <span>Made with ❤️ in Ghana 🇬🇭</span>
@@ -412,8 +358,6 @@
     </div>
   </footer>
 
-
-  <!-- Toast notification (shown after successful form submit) -->
   <div class="toast" id="toast" role="status" aria-live="polite">
     <span class="toast-icon">✅</span>
     <div>
@@ -421,8 +365,6 @@
       <span style="font-size:0.82rem;color:var(--text-secondary)">We'll get back to you within 2 hours.</span>
     </div>
   </div>
-
-
   <!--
     External JavaScript file link.
     MUST be at the BOTTOM of <body> — this ensures all HTML
