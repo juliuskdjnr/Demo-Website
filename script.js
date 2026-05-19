@@ -5,29 +5,24 @@
    Placing it at the BOTTOM ensures all HTML elements exist
    before this script tries to find them.
    ============================================================ */
-
-/* ═══════════════════════════════════════════════════
-   DATA — Product catalogue
-   An array of objects. Each object = one product.
-═══════════════════════════════════════════════════ */
 const products = [
   {
     id: 1,
-    name: "Nexus Pro Display 4K",
+    name: "KD Pro Display 4K",
     category: "display",
     price: "$649",
     emoji: "🖥️",
     description: "27\" OLED panel with 144Hz refresh rate and Delta-E < 1 colour accuracy. Perfect for creators.",
-    fullDesc: "The Nexus Pro Display 4K delivers studio-grade colour in a sleek aluminium chassis. Features USB-C 90W charging, KVM switch, and VESA compatibility. A complete workstation upgrade."
+    fullDesc: "The KD Pro Display 4K delivers studio-grade colour in a sleek aluminium chassis. Features USB-C 90W charging, KVM switch, and VESA compatibility. A complete workstation upgrade."
   },
   {
     id: 2,
-    name: "Nexus ANC Headphones",
+    name: "KD ANC Headphones",
     category: "audio",
     price: "$199",
     emoji: "🎧",
     description: "40dB active noise cancellation, 30h battery, premium leather ear cups.",
-    fullDesc: "Block out the world with 40dB ANC and lose yourself in studio-quality audio. The Nexus ANC headphones fold flat, include a carry case, and connect to 3 devices simultaneously."
+    fullDesc: "Block out the world with 40dB ANC and lose yourself in studio-quality audio. The KD ANC headphones fold flat, include a carry case, and connect to 3 devices simultaneously."
   },
   {
     id: 3,
@@ -40,12 +35,12 @@ const products = [
   },
   {
     id: 4,
-    name: "Nexus Phone 15 Ultra",
+    name: "KD Phone 15 Ultra",
     category: "mobile",
     price: "$999",
     emoji: "📱",
     description: "6.7\" AMOLED, 200MP camera system, 5000mAh battery, 100W charging.",
-    fullDesc: "Engineered for power users. The Nexus Phone 15 Ultra packs a Snapdragon 8 Gen 3 chip, satellite connectivity, and IP68 water resistance. Ships with a 100W charger in the box."
+    fullDesc: "Engineered for power users. The KD Phone 15 Ultra packs a Snapdragon 8 Gen 3 chip, satellite connectivity, and IP68 water resistance. Ships with a 100W charger in the box."
   },
   {
     id: 5,
@@ -76,12 +71,12 @@ const products = [
   },
   {
     id: 8,
-    name: "Nexus Buds Pro",
+    name: "KD Buds Pro",
     category: "audio",
     price: "$89",
     emoji: "🎵",
     description: "True wireless, IPX5 water resistant, 8h battery + 32h case, spatial audio.",
-    fullDesc: "Nexus Buds Pro fit securely for workouts and stay connected up to 30m. Transparency mode lets you hear your surroundings without removing the buds. Wireless charging case included."
+    fullDesc: "KD Buds Pro fit securely for workouts and stay connected up to 30m. Transparency mode lets you hear your surroundings without removing the buds. Wireless charging case included."
   },
   {
     id: 9,
@@ -94,19 +89,18 @@ const products = [
   }
 ];
 
-/* ═══════════════════════════════════════════════════
-   STATE — variables that track what's happening at runtime
-═══════════════════════════════════════════════════ */
+// STATE — variables that track what's happening at runtime 
+
 let cartCount       = 0;
 let activeFilter    = 'all';
 let searchQuery     = '';
 let currentProductId = null;
 
-/* ═══════════════════════════════════════════════════
+/* 
    DOM REFERENCES
    Grab each element once and store it in a variable.
    Much faster than calling getElementById every time.
-═══════════════════════════════════════════════════ */
+*/
 const hamburger    = document.getElementById('hamburger');
 const navLinks     = document.getElementById('navLinks');
 const themeToggle  = document.getElementById('themeToggle');
@@ -120,21 +114,21 @@ const cartCountEl  = document.getElementById('cartCount');
 const contactForm  = document.getElementById('contactForm');
 const toast        = document.getElementById('toast');
 
-/* ═══════════════════════════════════════════════════
+/* 
    FEATURE 1: DARK / LIGHT MODE TOGGLE
    Adds/removes .light-mode on <body>.
    CSS variables in style.css handle all colour changes.
-═══════════════════════════════════════════════════ */
+*/
 themeToggle.addEventListener('click', () => {
   document.body.classList.toggle('light-mode');
   const isLight = document.body.classList.contains('light-mode');
   themeToggle.textContent = isLight ? '☀️' : '🌙';
 });
 
-/* ═══════════════════════════════════════════════════
+/* 
    MOBILE HAMBURGER MENU
    Toggles .open class on the nav list and button.
-═══════════════════════════════════════════════════ */
+*/
 hamburger.addEventListener('click', () => {
   const isOpen = navLinks.classList.toggle('open');
   hamburger.classList.toggle('open', isOpen);
@@ -150,11 +144,11 @@ navLinks.querySelectorAll('a').forEach(link => {
   });
 });
 
-/* ═══════════════════════════════════════════════════
+/*
    RENDER PRODUCTS
    Builds a card for each product and injects it into the DOM.
    Re-runs whenever the search text or filter changes.
-═══════════════════════════════════════════════════ */
+*/
 function renderProducts() {
   // Filter array: keep only products that match BOTH filter AND search
   const filtered = products.filter(p => {
@@ -196,20 +190,20 @@ function renderProducts() {
   });
 }
 
-/* ═══════════════════════════════════════════════════
+/*
    FEATURE 2: LIVE SEARCH
    Fires on every keystroke inside the search box.
-═══════════════════════════════════════════════════ */
+*/
 searchInput.addEventListener('input', (e) => {
   searchQuery = e.target.value.toLowerCase().trim();
   renderProducts();
 });
 
-/* ═══════════════════════════════════════════════════
+/*
    FEATURE: FILTER BY CATEGORY
    Uses event delegation — one listener on the parent
    instead of one listener per button.
-═══════════════════════════════════════════════════ */
+*/
 document.querySelector('.filter-bar').addEventListener('click', (e) => {
   if (!e.target.classList.contains('filter-btn')) return;
 
@@ -220,11 +214,11 @@ document.querySelector('.filter-bar').addEventListener('click', (e) => {
   renderProducts();
 });
 
-/* ═══════════════════════════════════════════════════
+/*
    FEATURE: PRODUCT DETAIL MODAL
    openModal() fills the modal with the selected product,
    then makes it visible via CSS class toggle.
-═══════════════════════════════════════════════════ */
+*/
 function openModal(productId) {
   const product = products.find(p => p.id === productId);
   if (!product) return;
@@ -258,9 +252,9 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeModal();
 });
 
-/* ═══════════════════════════════════════════════════
+/*
    FEATURE 3: ADD TO CART COUNTER
-═══════════════════════════════════════════════════ */
+*/
 function addToCart() {
   cartCount++;
   cartCountEl.textContent = cartCount;
@@ -275,11 +269,11 @@ function addToCart() {
 
 document.getElementById('modalAddBtn').addEventListener('click', addToCart);
 
-/* ═══════════════════════════════════════════════════
+/*
    CONTACT FORM VALIDATION
    Runs on submit. Shows inline error messages for
    any fields that fail validation.
-═══════════════════════════════════════════════════ */
+*/
 
 // Adds/removes .error on input and shows/hides the error message span
 function setError(inputId, errorId, condition) {
@@ -327,10 +321,10 @@ contactForm.addEventListener('submit', (e) => {
   });
 });
 
-/* ═══════════════════════════════════════════════════
+/*
    TOAST NOTIFICATION
    Slides in then disappears after 3.5 seconds.
-═══════════════════════════════════════════════════ */
+*/
 function showToast() {
   toast.classList.add('show');
   setTimeout(() => {
@@ -338,8 +332,8 @@ function showToast() {
   }, 3500);
 }
 
-/* ═══════════════════════════════════════════════════
+/*
    INITIAL RENDER
    Build product cards on page load.
-═══════════════════════════════════════════════════ */
+*/
 renderProducts();
