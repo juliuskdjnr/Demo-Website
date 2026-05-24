@@ -1,125 +1,140 @@
 <!DOCTYPE html>
-<!--
-  CONTACT PAGE — KD's Tech
-  Get in touch with the KD's Tech team via contact form or direct channels.
--->
+<!-- CONTACT PAGE — KD's Tech -->
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact Us — KD's Tech</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
-
   <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-    <nav aria-label="Main navigation">
+
+  <!-- NAVIGATION -->
+  <nav aria-label="Main navigation">
     <div class="nav-container">
-
       <a href="index.html" class="logo">KD's<span>.</span>Tech</a>
-
       <ul class="nav-links" id="navLinks" role="list">
         <li><a href="index.html">Home</a></li>
         <li><a href="products.html">Products</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
-
       <div class="nav-controls">
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode" title="Toggle theme">
-          🌙
-        </button>
-
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode" title="Toggle theme">🌙</button>
         <button class="cart-btn" id="cartBtn" aria-label="View cart">
           🛒 Cart
           <span class="cart-count" id="cartCount" aria-live="polite">0</span>
         </button>
-
         <button class="hamburger" id="hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
-          <span></span>
-          <span></span>
-          <span></span>
+          <span></span><span></span><span></span>
         </button>
       </div>
-
     </div>
   </nav>
 
-  <section id="contact" aria-label="Contact us">
+
+  <!-- PAGE HERO BANNER -->
+  <section style="background: var(--bg-secondary); padding-top: calc(var(--nav-height) + 60px); padding-bottom: 60px; padding-left: 24px; padding-right: 24px;">
+    <div class="section-container" style="text-align: center;">
+      <span class="section-tag">Get in Touch</span>
+      <h1 class="section-title" style="margin-top: 8px;">We'd love to hear from you</h1>
+      <p class="section-subtitle">
+        Whether you have a product question, need order support, or just want to say hi —
+        our team is here and ready to help. We typically respond within 2 hours.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- CONTACT FORM + INFO -->
+  <section id="contact" aria-label="Contact us" style="background: var(--bg-primary);">
     <div class="section-container">
       <div class="contact-grid">
 
+        <!-- LEFT: Contact info -->
         <div class="contact-info">
-          <span class="section-tag">Get in Touch</span>
-          <h2 class="section-title">We'd love to hear from you</h2>
+          <span class="section-tag">Contact Details</span>
+          <h2 class="section-title">Reach us directly</h2>
           <p class="contact-desc">
-            Have a question about a product? Need help with an order?
-            Our team typically responds within 2 hours on business days.
+            Have a question about a product? Need help tracking an order?
+            Want to partner with us? Pick the channel that works best for you.
           </p>
 
           <div class="contact-details">
             <div class="contact-item">
               <span class="contact-item-icon">📧</span>
               <div>
-                <strong>Email</strong><br/>
+                <strong>Email Us</strong><br/>
                 <span style="color:var(--text-secondary);font-size:0.9rem;">info@kdstech.io</span>
               </div>
             </div>
             <div class="contact-item">
               <span class="contact-item-icon">📞</span>
               <div>
-                <strong>Phone</strong><br/>
+                <strong>Call Us</strong><br/>
                 <span style="color:var(--text-secondary);font-size:0.9rem;">+233 20 332 1964</span>
               </div>
             </div>
             <div class="contact-item">
               <span class="contact-item-icon">📍</span>
               <div>
-                <strong>Location</strong><br/>
-                <span style="color:var(--text-secondary);font-size:0.9rem;">Accra, Ghana</span>
+                <strong>Visit Us</strong><br/>
+                <span style="color:var(--text-secondary);font-size:0.9rem;">14 Independence Ave, Accra, Ghana</span>
               </div>
+            </div>
+            <div class="contact-item">
+              <span class="contact-item-icon">🕐</span>
+              <div>
+                <strong>Business Hours</strong><br/>
+                <span style="color:var(--text-secondary);font-size:0.9rem;">Mon – Fri: 8am – 6pm GMT<br/>Sat: 9am – 2pm GMT</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Social links under contact info -->
+          <div style="margin-top: 32px;">
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 14px; font-weight: 500;">Follow us</p>
+            <div class="social-links">
+              <a href="#" class="social-link" aria-label="Twitter / X">𝕏</a>
+              <a href="#" class="social-link" aria-label="Instagram">📸</a>
+              <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+              <a href="#" class="social-link" aria-label="YouTube">▶</a>
             </div>
           </div>
         </div>
 
+        <!-- RIGHT: Contact form -->
         <div class="contact-form-card">
+          <h3 style="font-family:'Syne',sans-serif; font-size:1.2rem; font-weight:700; margin-bottom:6px;">Send us a message</h3>
+          <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:24px;">
+            Fill out the form below and we'll get back to you as soon as possible.
+          </p>
+
           <form id="contactForm" novalidate>
 
             <div class="form-group">
               <label for="formName">Full Name *</label>
-              <input
-                type="text"
-                id="formName"
-                class="form-control"
-                placeholder="e.g. Kwame Mensah"
-                autocomplete="name"
-              />
+              <input type="text" id="formName" class="form-control" placeholder="e.g. Kwame Mensah" autocomplete="name" />
               <span class="error-msg" id="nameError">Please enter your full name.</span>
             </div>
 
             <div class="form-group">
               <label for="formEmail">Email Address *</label>
-              <input
-                type="email"
-                id="formEmail"
-                class="form-control"
-                placeholder="e.g. kwame@email.com"
-                autocomplete="email"
-              />
+              <input type="email" id="formEmail" class="form-control" placeholder="e.g. kwame@email.com" autocomplete="email" />
               <span class="error-msg" id="emailError">Please enter a valid email address.</span>
             </div>
 
             <div class="form-group">
+              <label for="formSubject">Subject</label>
+              <input type="text" id="formSubject" class="form-control" placeholder="e.g. Question about an order" />
+            </div>
+
+            <div class="form-group">
               <label for="formMessage">Message *</label>
-              <textarea
-                id="formMessage"
-                class="form-control"
-                placeholder="Tell us how we can help…"
-              ></textarea>
+              <textarea id="formMessage" class="form-control" placeholder="Tell us how we can help…"></textarea>
               <span class="error-msg" id="messageError">Message must be at least 10 characters.</span>
             </div>
 
@@ -134,15 +149,80 @@
     </div>
   </section>
 
+
+  <!-- FAQ SECTION -->
+  <section aria-label="FAQ" style="background: var(--bg-secondary);">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-tag">Quick Answers</span>
+        <h2 class="section-title">Frequently asked questions</h2>
+        <p class="section-subtitle">Can't find your answer here? Send us a message above.</p>
+      </div>
+
+      <div class="about-grid" style="gap: 24px;">
+
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+
+          <div class="stat-box" style="padding: 24px; text-align: left;">
+            <strong style="font-family:'Syne',sans-serif; font-size:0.95rem; display:block; margin-bottom:8px; color:var(--accent);">How long does delivery take?</strong>
+            <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6;">
+              We deliver nationwide across Ghana within 48 hours. Accra orders are typically delivered same-day or next morning. You'll receive a tracking link as soon as your order ships.
+            </p>
+          </div>
+
+          <div class="stat-box" style="padding: 24px; text-align: left;">
+            <strong style="font-family:'Syne',sans-serif; font-size:0.95rem; display:block; margin-bottom:8px; color:var(--accent);">What is your return policy?</strong>
+            <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6;">
+              You can return any product within 30 days of delivery for a full refund. The item must be in its original packaging. We'll arrange a free pickup from your location.
+            </p>
+          </div>
+
+          <div class="stat-box" style="padding: 24px; text-align: left;">
+            <strong style="font-family:'Syne',sans-serif; font-size:0.95rem; display:block; margin-bottom:8px; color:var(--accent);">Are your products covered by warranty?</strong>
+            <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6;">
+              Yes — all products come with a minimum 12-month warranty. Some premium items carry a 2-year warranty. Warranty details are listed on each product page.
+            </p>
+          </div>
+
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+
+          <div class="stat-box" style="padding: 24px; text-align: left;">
+            <strong style="font-family:'Syne',sans-serif; font-size:0.95rem; display:block; margin-bottom:8px; color:var(--accent);">What payment methods do you accept?</strong>
+            <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6;">
+              We accept Mobile Money (MTN, Vodafone, AirtelTigo), bank transfers, and all major credit/debit cards. All payments are secured with 256-bit SSL encryption.
+            </p>
+          </div>
+
+          <div class="stat-box" style="padding: 24px; text-align: left;">
+            <strong style="font-family:'Syne',sans-serif; font-size:0.95rem; display:block; margin-bottom:8px; color:var(--accent);">Do you ship outside Ghana?</strong>
+            <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6;">
+              Currently we deliver within Ghana only. We are actively working on expanding to Nigeria, Côte d'Ivoire, and Senegal. Sign up for our newsletter to be notified first.
+            </p>
+          </div>
+
+          <div class="stat-box" style="padding: 24px; text-align: left;">
+            <strong style="font-family:'Syne',sans-serif; font-size:0.95rem; display:block; margin-bottom:8px; color:var(--accent);">How do I track my order?</strong>
+            <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6;">
+              Once your order is dispatched you'll receive an SMS and email with a tracking link. You can also contact our support team at any time for a live update on your delivery.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
   <footer>
     <div class="footer-container">
-
       <div class="footer-top">
-
         <div class="footer-brand">
           <a href="index.html" class="logo">KD's<span>.</span>Tech</a>
           <p>Premium technology products for curious minds.<br/>Built for quality. Priced for everyone.</p>
-
           <div class="social-links" aria-label="Social media links">
             <a href="#" class="social-link" aria-label="Twitter / X">𝕏</a>
             <a href="#" class="social-link" aria-label="Instagram">📸</a>
@@ -151,7 +231,6 @@
             <a href="#" class="social-link" aria-label="GitHub">⌥</a>
           </div>
         </div>
-
         <div class="footer-col">
           <h4>Products</h4>
           <ul>
@@ -161,7 +240,6 @@
             <li><a href="products.html">Accessories</a></li>
           </ul>
         </div>
-
         <div class="footer-col">
           <h4>Company</h4>
           <ul>
@@ -171,7 +249,6 @@
             <li><a href="#">Blog</a></li>
           </ul>
         </div>
-
         <div class="footer-col">
           <h4>Support</h4>
           <ul>
@@ -181,14 +258,11 @@
             <li><a href="#">Privacy Policy</a></li>
           </ul>
         </div>
-
       </div>
-
       <div class="footer-bottom">
         <span>© 2026 KD's Tech. All rights reserved.</span>
-        <span>Made in xdGhana 🇬🇭</span>
+        <span>Made with ❤️ in Ghana 🇬🇭</span>
       </div>
-
     </div>
   </footer>
 
@@ -201,6 +275,5 @@
   </div>
 
   <script src="script.js"></script>
-
 </body>
 </html>

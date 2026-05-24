@@ -1,62 +1,66 @@
 <!DOCTYPE html>
-<!--
-  ABOUT PAGE — KD's Tech
-  Learn about KD's Tech company story, values, and team.
--->
+<!-- ABOUT PAGE — KD's Tech -->
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About Us — KD's Tech</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
-
   <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-    <nav aria-label="Main navigation">
+
+  <!-- NAVIGATION -->
+  <nav aria-label="Main navigation">
     <div class="nav-container">
-
       <a href="index.html" class="logo">KD's<span>.</span>Tech</a>
-
       <ul class="nav-links" id="navLinks" role="list">
         <li><a href="index.html">Home</a></li>
         <li><a href="products.html">Products</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
-
       <div class="nav-controls">
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode" title="Toggle theme">
-          🌙
-        </button>
-
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode" title="Toggle theme">🌙</button>
         <button class="cart-btn" id="cartBtn" aria-label="View cart">
           🛒 Cart
           <span class="cart-count" id="cartCount" aria-live="polite">0</span>
         </button>
-
         <button class="hamburger" id="hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
-          <span></span>
-          <span></span>
-          <span></span>
+          <span></span><span></span><span></span>
         </button>
       </div>
-
     </div>
   </nav>
 
-  <section id="about" aria-label="About us">
+
+  <!-- PAGE HERO BANNER -->
+  <section style="background: var(--bg-secondary); padding-top: calc(var(--nav-height) + 60px); padding-bottom: 60px; padding-left: 24px; padding-right: 24px;">
+    <div class="section-container" style="text-align: center;">
+      <span class="section-tag">Our Story</span>
+      <h1 class="section-title" style="margin-top: 8px;">Technology that works<br/>for everyone</h1>
+      <p class="section-subtitle">
+        We started in Accra with a simple mission: make premium tech accessible to every Ghanaian.
+        Six years later, that mission hasn't changed — only our reach has.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- MAIN ABOUT SECTION -->
+  <section id="about" aria-label="About us" style="background: var(--bg-primary);">
     <div class="section-container">
       <div class="about-grid">
 
+        <!-- LEFT: Visual stats panel -->
         <div class="about-visual">
           <span class="about-icon">🚀</span>
           <h3 style="font-family:'Syne',sans-serif; font-size:1.3rem; margin-bottom:8px;">Built for the future</h3>
-          <p style="color:var(--text-secondary); font-size:0.9rem;">Bringing premium technology to every home and workspace.</p>
+          <p style="color:var(--text-secondary); font-size:0.9rem; line-height: 1.6;">
+            Bringing premium technology to every home and workspace across Ghana and West Africa.
+          </p>
           <div class="stats-row">
             <div class="stat-box">
               <span class="num">6+</span>
@@ -73,37 +77,42 @@
           </div>
         </div>
 
+        <!-- RIGHT: Text content -->
         <div class="about-content">
-          <span class="section-tag">Our Story</span>
-          <h2 class="section-title">Technology that works<br/>for everyone</h2>
+          <span class="section-tag">Who We Are</span>
+          <h2 class="section-title">We believe great tech<br/>should be for everyone</h2>
 
           <p class="about-text">
-            KD's Tech was founded with a simple belief: premium technology
-            shouldn't be out of reach. We source, curate, and deliver the best
-            gadgets — from flagship displays to everyday accessories — at fair prices.
+            KD's Tech was founded in 2018 with a simple belief: premium technology shouldn't be
+            out of reach. We source, curate, and deliver the best gadgets — from flagship displays
+            to everyday accessories — at prices that are honest and fair.
           </p>
           <p class="about-text">
-            Our team of engineers and designers rigorously tests every product
-            before it ever reaches our catalogue. If it doesn't pass our standards,
-            it doesn't ship.
+            Our team of engineers and designers rigorously tests every product before it ever
+            reaches our catalogue. We don't just resell — we review, evaluate, and only approve
+            products that genuinely improve your life. If it doesn't pass our standards, it doesn't ship.
           </p>
 
           <ul class="features-list">
             <li>
               <span class="feat-icon">✓</span>
-              <div><strong>Quality Guarantee</strong> — Every product is tested before listing.</div>
+              <div><strong>Quality Guarantee</strong> — Every product is tested before listing. No exceptions.</div>
             </li>
             <li>
               <span class="feat-icon">🚚</span>
-              <div><strong>Fast Delivery</strong> — Nationwide shipping within 48 hours.</div>
+              <div><strong>Fast Delivery</strong> — Nationwide shipping across Ghana within 48 hours.</div>
             </li>
             <li>
               <span class="feat-icon">🔄</span>
-              <div><strong>Easy Returns</strong> — 30-day hassle-free return policy.</div>
+              <div><strong>Easy Returns</strong> — 30-day hassle-free return policy, no questions asked.</div>
             </li>
             <li>
               <span class="feat-icon">💬</span>
-              <div><strong>24/7 Support</strong> — Real humans available around the clock.</div>
+              <div><strong>24/7 Support</strong> — Real humans available around the clock via phone, email, or chat.</div>
+            </li>
+            <li>
+              <span class="feat-icon">🛡️</span>
+              <div><strong>1-Year Warranty</strong> — All products come with a minimum 12-month warranty.</div>
             </li>
           </ul>
         </div>
@@ -112,15 +121,118 @@
     </div>
   </section>
 
+
+  <!-- OUR MISSION -->
+  <section aria-label="Mission" style="background: var(--bg-secondary);">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-tag">Our Mission</span>
+        <h2 class="section-title">What drives us every day</h2>
+        <p class="section-subtitle">Three core values guide every product decision, every customer interaction, every delivery.</p>
+      </div>
+
+      <div class="stats-row" style="grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 0;">
+
+        <div class="stat-box" style="padding: 36px 28px; text-align: left;">
+          <span style="font-size: 2.5rem; display: block; margin-bottom: 16px;">🎯</span>
+          <span class="num" style="font-size: 1.1rem; display: block; margin-bottom: 10px;">Accessibility</span>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7;">
+            Premium technology should not be a luxury. We negotiate directly with manufacturers to
+            keep prices fair — no unnecessary markups, no hidden fees.
+          </p>
+        </div>
+
+        <div class="stat-box" style="padding: 36px 28px; text-align: left;">
+          <span style="font-size: 2.5rem; display: block; margin-bottom: 16px;">🔬</span>
+          <span class="num" style="font-size: 1.1rem; display: block; margin-bottom: 10px;">Integrity</span>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7;">
+            We only sell what we would recommend to a friend. Every product in our catalogue has
+            been physically tested by our team. Honest reviews, honest prices.
+          </p>
+        </div>
+
+        <div class="stat-box" style="padding: 36px 28px; text-align: left;">
+          <span style="font-size: 2.5rem; display: block; margin-bottom: 16px;">🌍</span>
+          <span class="num" style="font-size: 1.1rem; display: block; margin-bottom: 10px;">Community</span>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7;">
+            We are proudly Ghanaian. A portion of every sale goes towards digital literacy
+            programmes for young people in underserved communities across the country.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- MEET THE TEAM -->
+  <section aria-label="Team" style="background: var(--bg-primary);">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-tag">The People</span>
+        <h2 class="section-title">Meet the team</h2>
+        <p class="section-subtitle">A small but passionate group of engineers, designers, and tech lovers based in Accra.</p>
+      </div>
+
+      <div class="stats-row" style="grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 0;">
+
+        <div class="about-visual" style="text-align: center; padding: 32px 24px;">
+          <span style="font-size: 3.5rem; display: block; margin-bottom: 14px;">👨🏾‍💻</span>
+          <strong style="font-family: 'Syne', sans-serif; font-size: 1rem; display: block; margin-bottom: 4px;">Kwabena Darko</strong>
+          <span style="font-size: 0.8rem; color: var(--accent); display: block; margin-bottom: 12px;">Founder & CEO</span>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+            Electronics engineer turned entrepreneur. Kwabena started KD's Tech after struggling to find quality tech in Ghana at fair prices.
+          </p>
+        </div>
+
+        <div class="about-visual" style="text-align: center; padding: 32px 24px;">
+          <span style="font-size: 3.5rem; display: block; margin-bottom: 14px;">👩🏽‍🔧</span>
+          <strong style="font-family: 'Syne', sans-serif; font-size: 1rem; display: block; margin-bottom: 4px;">Ama Osei</strong>
+          <span style="font-size: 0.8rem; color: var(--accent); display: block; margin-bottom: 12px;">Head of Product Testing</span>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+            Biomedical engineer with a passion for hardware. Ama leads the 14-point quality check process that every product must pass.
+          </p>
+        </div>
+
+        <div class="about-visual" style="text-align: center; padding: 32px 24px;">
+          <span style="font-size: 3.5rem; display: block; margin-bottom: 14px;">👨🏿‍🎨</span>
+          <strong style="font-family: 'Syne', sans-serif; font-size: 1rem; display: block; margin-bottom: 4px;">Nana Agyemang</strong>
+          <span style="font-size: 0.8rem; color: var(--accent); display: block; margin-bottom: 12px;">Lead Designer</span>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+            UI/UX designer and frontend developer. Nana crafts every pixel of our website and ensures every customer experience feels premium.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- CTA — VISIT PRODUCTS -->
+  <section aria-label="Call to action" style="background: var(--bg-secondary);">
+    <div class="section-container">
+      <div class="about-visual" style="max-width: 600px; margin: 0 auto; text-align: center; padding: 48px 40px;">
+        <span style="font-size: 3rem; display: block; margin-bottom: 16px;">🛒</span>
+        <h2 class="section-title" style="margin-bottom: 12px;">Ready to upgrade?</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 28px; font-size: 0.95rem; line-height: 1.7;">
+          Browse our full catalogue of hand-picked, lab-tested tech products — all with fast delivery and a 30-day return guarantee.
+        </p>
+        <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+          <a href="products.html" class="btn-primary">Shop All Products →</a>
+          <a href="contact.html" class="btn-secondary">Get in Touch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
   <footer>
     <div class="footer-container">
-
       <div class="footer-top">
-
         <div class="footer-brand">
           <a href="index.html" class="logo">KD's<span>.</span>Tech</a>
           <p>Premium technology products for curious minds.<br/>Built for quality. Priced for everyone.</p>
-
           <div class="social-links" aria-label="Social media links">
             <a href="#" class="social-link" aria-label="Twitter / X">𝕏</a>
             <a href="#" class="social-link" aria-label="Instagram">📸</a>
@@ -129,7 +241,6 @@
             <a href="#" class="social-link" aria-label="GitHub">⌥</a>
           </div>
         </div>
-
         <div class="footer-col">
           <h4>Products</h4>
           <ul>
@@ -139,7 +250,6 @@
             <li><a href="products.html">Accessories</a></li>
           </ul>
         </div>
-
         <div class="footer-col">
           <h4>Company</h4>
           <ul>
@@ -149,7 +259,6 @@
             <li><a href="#">Blog</a></li>
           </ul>
         </div>
-
         <div class="footer-col">
           <h4>Support</h4>
           <ul>
@@ -159,14 +268,11 @@
             <li><a href="#">Privacy Policy</a></li>
           </ul>
         </div>
-
       </div>
-
       <div class="footer-bottom">
         <span>© 2026 KD's Tech. All rights reserved.</span>
-        <span>Made in xdGhana 🇬🇭</span>
+        <span>Made with ❤️ in Ghana 🇬🇭</span>
       </div>
-
     </div>
   </footer>
 
@@ -179,6 +285,5 @@
   </div>
 
   <script src="script.js"></script>
-
 </body>
 </html>

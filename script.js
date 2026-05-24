@@ -1,10 +1,13 @@
 /*
-   script.js — KD's Tech Landing Page
-   How JS links to HTML:
-     In index.html (bottom of <body>) → <script src="script.js"></script>
-   Placing it at the BOTTOM ensures all HTML elements exist
-   before this script tries to find them.
+  script.js — KD's Tech
+  Single JS file shared across all pages.
+  Uses guard checks (if element exists) so it runs
+  safely on pages that don't have every element.
 */
+
+/* ═══════════════════════════════════════════════
+   PRODUCT DATA — 12 products across 5 categories
+═══════════════════════════════════════════════ */
 const products = [
   {
     id: 1,
@@ -86,56 +89,89 @@ const products = [
     emoji: "🖥️",
     description: "32\" 1440p VA panel, 165Hz, 1ms MPRT, FreeSync Premium Pro.",
     fullDesc: "The 1500R curve wraps your field of view for maximum immersion. Variable refresh rate eliminates screen tearing across AMD and NVIDIA cards. Includes tilt, swivel, and height adjustment stand."
+  },
+  {
+    id: 10,
+    name: "KD Tab Pro 12",
+    category: "mobile",
+    price: "$549",
+    emoji: "📟",
+    description: "12\" AMOLED tablet, M2 chip, 256GB storage, stylus support, 10,000mAh battery.",
+    fullDesc: "The KD Tab Pro 12 is the ultimate portable workstation. With an M2 chip, 8GB RAM, and a stunning 120Hz display, it handles creative work, video editing, and gaming without breaking a sweat. Includes keyboard folio case."
+  },
+  {
+    id: 11,
+    name: "Smart Desk Lamp X",
+    category: "accessories",
+    price: "$49",
+    emoji: "💡",
+    description: "Adjustable colour temperature, wireless phone charging base, touch controls.",
+    fullDesc: "The Smart Desk Lamp X brings intelligence to your workspace. Cycle through 5 colour temperatures from warm 2700K to cool 6500K. The integrated 15W wireless charger keeps your phone topped up all day."
+  },
+  {
+    id: 12,
+    name: "Portable SSD 2TB",
+    category: "accessories",
+    price: "$119",
+    emoji: "💾",
+    description: "2TB NVMe SSD, 2000MB/s read speed, USB-C, rugged drop-proof housing.",
+    fullDesc: "Transfer a full-length 4K film in under 10 seconds. The KD Portable SSD uses NVMe technology in a palm-sized housing that's drop-proof from 1.8m and dust/water resistant to IP55. Includes USB-C and USB-A cables."
   }
 ];
 
-// STATE — variables that track what's happening at runtime 
 
-let cartCount       = 0;
-let activeFilter    = 'all';
-let searchQuery     = '';
+/* ═══════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════ */
+let cartCount        = 0;
+let activeFilter     = 'all';
+let searchQuery      = '';
 let currentProductId = null;
 
-/* 
+
+/* ═══════════════════════════════════════════════
    DOM REFERENCES
-   Grab each element once and store it in a variable.
-   Much faster than calling getElementById every time.
-*/
+   Each element is fetched with getElementById.
+   Some elements only exist on certain pages, so
+   we store null if not found and check before use.
+═══════════════════════════════════════════════ */
 const hamburger    = document.getElementById('hamburger');
 const navLinks     = document.getElementById('navLinks');
 const themeToggle  = document.getElementById('themeToggle');
+const cartBtn      = document.getElementById('cartBtn');
+const cartCountEl  = document.getElementById('cartCount');
+const toast        = document.getElementById('toast');
+
+// Products-page only elements (null on other pages)
 const searchInput  = document.getElementById('searchInput');
 const productsGrid = document.getElementById('productsGrid');
 const noResults    = document.getElementById('noResults');
 const modalOverlay = document.getElementById('modalOverlay');
 const modalClose   = document.getElementById('modalClose');
-const cartBtn      = document.getElementById('cartBtn');
-const cartCountEl  = document.getElementById('cartCount');
-const contactForm  = document.getElementById('contactForm');
-const toast        = document.getElementById('toast');
 
-/* 
+// Contact-page only elements (null on other pages)
+const contactForm  = document.getElementById('contactForm');
+
+
+/* ═══════════════════════════════════════════════
    FEATURE 1: DARK / LIGHT MODE TOGGLE
-   Adds/removes .light-mode on <body>.
-   CSS variables in style.css handle all colour changes.
-*/
+═══════════════════════════════════════════════ */
 themeToggle.addEventListener('click', () => {
   document.body.classList.toggle('light-mode');
   const isLight = document.body.classList.contains('light-mode');
   themeToggle.textContent = isLight ? '☀️' : '🌙';
 });
 
-/* 
+
+/* ═══════════════════════════════════════════════
    MOBILE HAMBURGER MENU
-   Toggles .open class on the nav list and button.
-*/
+═══════════════════════════════════════════════ */
 hamburger.addEventListener('click', () => {
   const isOpen = navLinks.classList.toggle('open');
   hamburger.classList.toggle('open', isOpen);
   hamburger.setAttribute('aria-expanded', isOpen);
 });
 
-// Close mobile menu when a nav link is tapped
 navLinks.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => {
     navLinks.classList.remove('open');
@@ -144,13 +180,14 @@ navLinks.querySelectorAll('a').forEach(link => {
   });
 });
 
-/*
+
+/* ═══════════════════════════════════════════════
    RENDER PRODUCTS
-   Builds a card for each product and injects it into the DOM.
-   Re-runs whenever the search text or filter changes.
-*/
+   Only runs on products.html (where productsGrid exists).
+═══════════════════════════════════════════════ */
 function renderProducts() {
-  // Filter array: keep only products that match BOTH filter AND search
+  if (!productsGrid) return; // safety guard — exit if not on products page
+
   const filtered = products.filter(p => {
     const matchesFilter = activeFilter === 'all' || p.category === activeFilter;
     const matchesSearch = p.name.toLowerCase().includes(searchQuery) ||
@@ -158,13 +195,13 @@ function renderProducts() {
     return matchesFilter && matchesSearch;
   });
 
-  // Remove previously rendered cards
+  // Clear old cards
   productsGrid.querySelectorAll('.product-card').forEach(card => card.remove());
 
-  // Show "no results" text if nothing matched
-  noResults.style.display = filtered.length === 0 ? 'block' : 'none';
+  // Show/hide no-results message
+  if (noResults) noResults.style.display = filtered.length === 0 ? 'block' : 'none';
 
-  // Create and insert a card for each matching product
+  // Build and insert a card for each matching product
   filtered.forEach(product => {
     const card = document.createElement('article');
     card.className = 'product-card';
@@ -183,157 +220,166 @@ function renderProducts() {
       </div>
     `;
 
-    // Clicking the card opens the detail modal
     card.addEventListener('click', () => openModal(product.id));
-
     productsGrid.insertBefore(card, noResults);
   });
 }
 
-/*
+
+/* ═══════════════════════════════════════════════
    FEATURE 2: LIVE SEARCH
-   Fires on every keystroke inside the search box.
-*/
-searchInput.addEventListener('input', (e) => {
-  searchQuery = e.target.value.toLowerCase().trim();
-  renderProducts();
-});
+   Only active on products.html.
+═══════════════════════════════════════════════ */
+if (searchInput) {
+  searchInput.addEventListener('input', (e) => {
+    searchQuery = e.target.value.toLowerCase().trim();
+    renderProducts();
+  });
+}
 
-/*
+
+/* ═══════════════════════════════════════════════
    FEATURE: FILTER BY CATEGORY
-   Uses event delegation — one listener on the parent
-   instead of one listener per button.
-*/
-document.querySelector('.filter-bar').addEventListener('click', (e) => {
-  if (!e.target.classList.contains('filter-btn')) return;
+   Only active on products.html.
+═══════════════════════════════════════════════ */
+const filterBar = document.querySelector('.filter-bar');
+if (filterBar) {
+  filterBar.addEventListener('click', (e) => {
+    if (!e.target.classList.contains('filter-btn')) return;
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    e.target.classList.add('active');
+    activeFilter = e.target.dataset.filter;
+    renderProducts();
+  });
+}
 
-  document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-  e.target.classList.add('active');
 
-  activeFilter = e.target.dataset.filter; // reads data-filter="..." attribute
-  renderProducts();
-});
-
-/*
+/* ═══════════════════════════════════════════════
    FEATURE: PRODUCT DETAIL MODAL
-   openModal() fills the modal with the selected product,
-   then makes it visible via CSS class toggle.
-*/
+   Only active on products.html.
+═══════════════════════════════════════════════ */
 function openModal(productId) {
+  if (!modalOverlay) return;
   const product = products.find(p => p.id === productId);
   if (!product) return;
 
   currentProductId = productId;
-
   document.getElementById('modalIcon').textContent  = product.emoji;
   document.getElementById('modalName').textContent  = product.name;
   document.getElementById('modalPrice').textContent = product.price;
   document.getElementById('modalDesc').textContent  = product.fullDesc;
 
   modalOverlay.classList.add('active');
-  document.body.style.overflow = 'hidden'; // stop background from scrolling
+  document.body.style.overflow = 'hidden';
 }
 
 function closeModal() {
+  if (!modalOverlay) return;
   modalOverlay.classList.remove('active');
   document.body.style.overflow = '';
   currentProductId = null;
 }
 
-modalClose.addEventListener('click', closeModal);
+if (modalClose) modalClose.addEventListener('click', closeModal);
 
-// Click on the dark overlay (outside the modal box) → close
-modalOverlay.addEventListener('click', (e) => {
-  if (e.target === modalOverlay) closeModal();
-});
+if (modalOverlay) {
+  modalOverlay.addEventListener('click', (e) => {
+    if (e.target === modalOverlay) closeModal();
+  });
+}
 
-// Press Escape key → close
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeModal();
 });
 
-/*
+
+/* ═══════════════════════════════════════════════
    FEATURE 3: ADD TO CART COUNTER
-*/
+═══════════════════════════════════════════════ */
 function addToCart() {
   cartCount++;
   cartCountEl.textContent = cartCount;
-  cartCountEl.classList.add('visible'); // show red badge
+  cartCountEl.classList.add('visible');
 
-  // Animate the cart button briefly
+  // Pop animation on the cart button
   cartBtn.style.transform = 'scale(1.15)';
   setTimeout(() => { cartBtn.style.transform = ''; }, 200);
 
   closeModal();
 }
 
-document.getElementById('modalAddBtn').addEventListener('click', addToCart);
+const modalAddBtn = document.getElementById('modalAddBtn');
+if (modalAddBtn) modalAddBtn.addEventListener('click', addToCart);
 
-/*
+
+/* ═══════════════════════════════════════════════
    CONTACT FORM VALIDATION
-   Runs on submit. Shows inline error messages for
-   any fields that fail validation.
-*/
-
-// Adds/removes .error on input and shows/hides the error message span
+   Only active on contact.html.
+═══════════════════════════════════════════════ */
 function setError(inputId, errorId, condition) {
   const input = document.getElementById(inputId);
   const error = document.getElementById(errorId);
+  if (!input || !error) return !condition; // skip if element not on this page
   if (condition) {
     input.classList.add('error');
     error.classList.add('show');
-    return false; // invalid
+    return false;
   } else {
     input.classList.remove('error');
     error.classList.remove('show');
-    return true;  // valid
+    return true;
   }
 }
 
-// Regex check: must have text @ text . text
 function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-contactForm.addEventListener('submit', (e) => {
-  e.preventDefault(); // stop the default page-reload
+if (contactForm) {
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
 
-  const name    = document.getElementById('formName').value.trim();
-  const email   = document.getElementById('formEmail').value.trim();
-  const message = document.getElementById('formMessage').value.trim();
+    const name    = document.getElementById('formName').value.trim();
+    const email   = document.getElementById('formEmail').value.trim();
+    const message = document.getElementById('formMessage').value.trim();
 
-  const nameOk    = setError('formName',    'nameError',    name === '');
-  const emailOk   = setError('formEmail',   'emailError',   !isValidEmail(email));
-  const messageOk = setError('formMessage', 'messageError', message.length < 10);
+    const nameOk    = setError('formName',    'nameError',    name === '');
+    const emailOk   = setError('formEmail',   'emailError',   !isValidEmail(email));
+    const messageOk = setError('formMessage', 'messageError', message.length < 10);
 
-  if (nameOk && emailOk && messageOk) {
-    contactForm.reset();
-    showToast();
-  }
-});
-
-// Live error clearing — removes the red border as the user types
-['formName', 'formEmail', 'formMessage'].forEach(id => {
-  document.getElementById(id).addEventListener('input', function () {
-    this.classList.remove('error');
-    const errEl = document.getElementById(id.replace('form', '').toLowerCase() + 'Error');
-    if (errEl) errEl.classList.remove('show');
+    if (nameOk && emailOk && messageOk) {
+      contactForm.reset();
+      showToast();
+    }
   });
-});
 
-/*
-   TOAST NOTIFICATION
-   Slides in then disappears after 3.5 seconds.
-*/
-function showToast() {
-  toast.classList.add('show');
-  setTimeout(() => {
-    toast.classList.remove('show');
-  }, 3500);
+  // Live error clearing as user types
+  ['formName', 'formEmail', 'formMessage'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('input', function () {
+      this.classList.remove('error');
+      const errEl = document.getElementById(id.replace('form', '').toLowerCase() + 'Error');
+      if (errEl) errEl.classList.remove('show');
+    });
+  });
 }
 
-/*
+
+/* ═══════════════════════════════════════════════
+   TOAST NOTIFICATION
+═══════════════════════════════════════════════ */
+function showToast() {
+  if (!toast) return;
+  toast.classList.add('show');
+  setTimeout(() => { toast.classList.remove('show'); }, 3500);
+}
+
+
+/* ═══════════════════════════════════════════════
    INITIAL RENDER
-   Build product cards on page load.
-*/
+   Runs renderProducts() on page load.
+   On non-products pages, the guard inside the
+   function exits immediately (productsGrid is null).
+═══════════════════════════════════════════════ */
 renderProducts();

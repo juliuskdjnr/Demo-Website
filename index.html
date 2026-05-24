@@ -1,85 +1,62 @@
 <!DOCTYPE html>
-<!--
-  ╔══════════════════════════════════════════════════════════╗
-  ║         NEXUS TECH — Modern Product Landing Page         ║
-  ╠══════════════════════════════════════════════════════════╣
-  ║  FILE STRUCTURE (3 separate files):                      ║
-  ║  ├── index.html  ← you are here (HTML structure only)    ║
-  ║  ├── style.css   ← all visual styling                    ║
-  ║  └── script.js   ← all interactivity & logic             ║
-  ╚══════════════════════════════════════════════════════════╝
--->
+<!-- HOME PAGE — KD's Tech -->
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KD's Tech — Modern Products</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
-
   <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-    <nav aria-label="Main navigation">
+
+  <!-- NAVIGATION -->
+  <nav aria-label="Main navigation">
     <div class="nav-container">
-
       <a href="index.html" class="logo">KD's<span>.</span>Tech</a>
-
       <ul class="nav-links" id="navLinks" role="list">
         <li><a href="index.html">Home</a></li>
         <li><a href="products.html">Products</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
-
       <div class="nav-controls">
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode" title="Toggle theme">
-          🌙
-        </button>
-
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode" title="Toggle theme">🌙</button>
         <button class="cart-btn" id="cartBtn" aria-label="View cart">
           🛒 Cart
           <span class="cart-count" id="cartCount" aria-live="polite">0</span>
         </button>
-
-        <!-- Hamburger — visible on mobile only (CSS hides it on desktop) -->
         <button class="hamburger" id="hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
-          <span></span>
-          <span></span>
-          <span></span>
+          <span></span><span></span><span></span>
         </button>
       </div>
-
     </div>
   </nav>
 
-  <section id="home" aria-label="Hero" >
+
+  <!-- HERO SECTION -->
+  <section id="home" aria-label="Hero">
     <div class="hero-container">
-      <!-- Left: text content -->
+
       <div class="hero-content">
         <div class="hero-badge">New arrivals just dropped</div>
-
         <h1 class="hero-title">
           Discover<br/>
           <span class="accent">Modern Tech</span><br/>
           Products
         </h1>
-
         <p class="hero-description">
-          Premium gadgets and cutting-edge technology curated for curious minds.
-          Quality you can trust, prices that make sense.
+          Premium gadgets and cutting-edge technology curated for curious minds in Ghana and beyond.
+          Quality you can trust, prices that make sense — delivered to your door.
         </p>
-
         <div class="hero-buttons">
           <a href="products.html" class="btn-primary">Shop Now →</a>
           <a href="about.html" class="btn-secondary">Learn More</a>
         </div>
       </div>
 
-      <!-- Right: decorative mockup panel -->
       <div class="hero-visual">
         <div class="hero-mockup">
           <div class="hero-stat">
@@ -90,9 +67,8 @@
             <span class="stat-number">4.9★</span>
             Average rating
           </div>
-
           <span class="mockup-icon">🖥️</span>
-          <div class="mockup-label">Nexus Pro Display</div>
+          <div class="mockup-label">KD Pro Display 4K</div>
           <div class="mockup-sublabel">4K · 144Hz · OLED</div>
         </div>
       </div>
@@ -101,16 +77,192 @@
   </section>
 
 
+  <!-- WHY CHOOSE US -->
+  <section aria-label="Why choose us" style="background: var(--bg-secondary);">
+    <div class="section-container">
 
+      <div class="section-header">
+        <span class="section-tag">Why KD's Tech</span>
+        <h2 class="section-title">Built around you</h2>
+        <p class="section-subtitle">Everything we do is designed to make buying tech simpler, safer, and more satisfying.</p>
+      </div>
+
+      <div class="stats-row" style="grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 0;">
+
+        <div class="stat-box" style="padding: 32px 24px; text-align: left;">
+          <span style="font-size: 2.2rem; display: block; margin-bottom: 14px;">🔬</span>
+          <span class="num" style="font-size: 1.1rem; display: block; margin-bottom: 10px;">Lab Tested</span>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7;">
+            Every product goes through a rigorous 14-point quality check by our in-house engineers before it reaches our catalogue. No shortcuts.
+          </p>
+        </div>
+
+        <div class="stat-box" style="padding: 32px 24px; text-align: left;">
+          <span style="font-size: 2.2rem; display: block; margin-bottom: 14px;">🚀</span>
+          <span class="num" style="font-size: 1.1rem; display: block; margin-bottom: 10px;">48hr Delivery</span>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7;">
+            Nationwide delivery within 48 hours. We partner with trusted couriers across Ghana to ensure your order arrives safely and on time.
+          </p>
+        </div>
+
+        <div class="stat-box" style="padding: 32px 24px; text-align: left;">
+          <span style="font-size: 2.2rem; display: block; margin-bottom: 14px;">🔄</span>
+          <span class="num" style="font-size: 1.1rem; display: block; margin-bottom: 10px;">30-Day Returns</span>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7;">
+            Not satisfied? Return any product within 30 days, no questions asked. We process refunds within 3 business days — guaranteed.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FEATURED PRODUCTS PREVIEW -->
+  <section aria-label="Featured products" style="background: var(--bg-primary);">
+    <div class="section-container">
+
+      <div class="section-header">
+        <span class="section-tag">Hot Right Now</span>
+        <h2 class="section-title">Top picks this week</h2>
+        <p class="section-subtitle">Our best-selling products — loved by customers across Ghana.</p>
+      </div>
+
+      <div class="products-grid">
+
+        <article class="product-card">
+          <span class="card-category">display</span>
+          <div class="card-image">🖥️</div>
+          <div class="card-body">
+            <h3 class="card-name">KD Pro Display 4K</h3>
+            <p class="card-description">27" OLED panel, 144Hz refresh rate, Delta-E &lt; 1 colour accuracy. Perfect for creators and professionals.</p>
+            <div class="card-footer">
+              <span class="card-price">$649</span>
+              <a href="products.html" class="card-btn">View More</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <span class="card-category">audio</span>
+          <div class="card-image">🎧</div>
+          <div class="card-body">
+            <h3 class="card-name">KD ANC Headphones</h3>
+            <p class="card-description">40dB active noise cancellation, 30h battery life, premium leather ear cups. Your world, your sound.</p>
+            <div class="card-footer">
+              <span class="card-price">$199</span>
+              <a href="products.html" class="card-btn">View More</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <span class="card-category">mobile</span>
+          <div class="card-image">📱</div>
+          <div class="card-body">
+            <h3 class="card-name">KD Phone 15 Ultra</h3>
+            <p class="card-description">6.7" AMOLED display, 200MP camera, 5000mAh battery with 100W fast charging. Power redefined.</p>
+            <div class="card-footer">
+              <span class="card-price">$999</span>
+              <a href="products.html" class="card-btn">View More</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <div style="text-align: center; margin-top: 48px;">
+        <a href="products.html" class="btn-primary">Browse All Products →</a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- TESTIMONIALS -->
+  <section aria-label="Testimonials" style="background: var(--bg-secondary);">
+    <div class="section-container">
+
+      <div class="section-header">
+        <span class="section-tag">Customer Love</span>
+        <h2 class="section-title">What our customers say</h2>
+        <p class="section-subtitle">Real reviews from real people across Ghana and beyond.</p>
+      </div>
+
+      <div class="stats-row" style="grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 0;">
+
+        <div class="about-visual" style="text-align: left; padding: 28px;">
+          <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 20px;">
+            "The KD Pro Display is genuinely the best monitor I've ever owned. Colours are breathtaking and the build quality is exceptional. Delivered in under 24 hours too!"
+          </p>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="font-size: 2rem;">👨🏾‍💻</span>
+            <div>
+              <strong style="font-size: 0.9rem; display: block;">Kwame Asante</strong>
+              <span style="font-size: 0.78rem; color: var(--text-secondary);">Graphic Designer, Accra</span>
+            </div>
+          </div>
+          <p style="color: var(--accent); margin-top: 14px; font-size: 0.85rem; letter-spacing: 0.05em;">★★★★★</p>
+        </div>
+
+        <div class="about-visual" style="text-align: left; padding: 28px;">
+          <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 20px;">
+            "Ordered the ANC headphones on a Friday, got them Saturday morning. Sound quality is incredible — the noise cancellation actually works even in Accra traffic!"
+          </p>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="font-size: 2rem;">👩🏽‍🎓</span>
+            <div>
+              <strong style="font-size: 0.9rem; display: block;">Abena Mensah</strong>
+              <span style="font-size: 0.78rem; color: var(--text-secondary);">Student, KNUST</span>
+            </div>
+          </div>
+          <p style="color: var(--accent); margin-top: 14px; font-size: 0.85rem; letter-spacing: 0.05em;">★★★★★</p>
+        </div>
+
+        <div class="about-visual" style="text-align: left; padding: 28px;">
+          <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 20px;">
+            "Had a small issue with my order and the support team resolved it within the hour. Customer service is top tier. I won't buy tech anywhere else now."
+          </p>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="font-size: 2rem;">👨🏿‍💼</span>
+            <div>
+              <strong style="font-size: 0.9rem; display: block;">Kofi Boateng</strong>
+              <span style="font-size: 0.78rem; color: var(--text-secondary);">Entrepreneur, Kumasi</span>
+            </div>
+          </div>
+          <p style="color: var(--accent); margin-top: 14px; font-size: 0.85rem; letter-spacing: 0.05em;">★★★★★</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- NEWSLETTER -->
+  <section aria-label="Newsletter" style="background: var(--bg-primary);">
+    <div class="section-container">
+      <div class="about-visual" style="max-width: 640px; margin: 0 auto; text-align: center; padding: 48px 40px;">
+        <span style="font-size: 3rem; display: block; margin-bottom: 16px;">📬</span>
+        <h2 class="section-title" style="margin-bottom: 12px;">Stay in the loop</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 28px; font-size: 0.95rem; line-height: 1.7;">
+          Get early access to new arrivals, exclusive deals, and tech tips — straight to your inbox. No spam, ever.
+        </p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
+          <input type="email" placeholder="Enter your email address" class="form-control" style="max-width: 300px; flex: 1;" />
+          <button class="btn-primary">Subscribe →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
   <footer>
     <div class="footer-container">
-
       <div class="footer-top">
-
         <div class="footer-brand">
           <a href="index.html" class="logo">KD's<span>.</span>Tech</a>
           <p>Premium technology products for curious minds.<br/>Built for quality. Priced for everyone.</p>
-
           <div class="social-links" aria-label="Social media links">
             <a href="#" class="social-link" aria-label="Twitter / X">𝕏</a>
             <a href="#" class="social-link" aria-label="Instagram">📸</a>
@@ -119,7 +271,6 @@
             <a href="#" class="social-link" aria-label="GitHub">⌥</a>
           </div>
         </div>
-
         <div class="footer-col">
           <h4>Products</h4>
           <ul>
@@ -129,7 +280,6 @@
             <li><a href="products.html">Accessories</a></li>
           </ul>
         </div>
-
         <div class="footer-col">
           <h4>Company</h4>
           <ul>
@@ -139,7 +289,6 @@
             <li><a href="#">Blog</a></li>
           </ul>
         </div>
-
         <div class="footer-col">
           <h4>Support</h4>
           <ul>
@@ -149,14 +298,11 @@
             <li><a href="#">Privacy Policy</a></li>
           </ul>
         </div>
-
       </div>
-
       <div class="footer-bottom">
         <span>© 2026 KD's Tech. All rights reserved.</span>
-        <span>Made in xdGhana 🇬🇭</span>
+        <span>Made with ❤️ in Ghana 🇬🇭</span>
       </div>
-
     </div>
   </footer>
 
@@ -167,14 +313,7 @@
       <span style="font-size:0.82rem;color:var(--text-secondary)">We'll get back to you within 2 hours.</span>
     </div>
   </div>
-  <!--
-    External JavaScript file link.
-    MUST be at the BOTTOM of <body> — this ensures all HTML
-    elements above exist before script.js tries to find them.
-    If placed in <head>, getElementById() would return null
-    because the elements wouldn't be loaded yet.
-  -->
-  <script src="script.js"></script>
 
+  <script src="script.js"></script>
 </body>
 </html>
