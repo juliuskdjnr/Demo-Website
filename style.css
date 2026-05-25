@@ -460,7 +460,7 @@ section { padding: 100px 24px; }
 /* ══════════════════════════════════════════════════════
    4. PRODUCTS SECTION
    ══════════════════════════════════════════════════════ */
-#products { background: var(--bg-secondary); }
+#products { }
 
 .search-wrapper {
   max-width: 480px;
@@ -724,7 +724,7 @@ section { padding: 100px 24px; }
 /* ══════════════════════════════════════════════════════
    6. ABOUT SECTION
    ══════════════════════════════════════════════════════ */
-#about { background: var(--bg-primary); }
+#about { }
 
 .about-grid {
   display: grid;
@@ -815,7 +815,7 @@ section { padding: 100px 24px; }
 /* ══════════════════════════════════════════════════════
    7. CONTACT SECTION
    ══════════════════════════════════════════════════════ */
-#contact { background: var(--bg-secondary); }
+#contact { }
 
 .contact-grid {
   display: grid;
@@ -1062,4 +1062,65 @@ footer {
 @media (max-width: 480px) {
   .footer-top { grid-template-columns: 1fr; }
   .stats-row { grid-template-columns: 1fr 1fr; }
+}
+/* ══════════════════════════════════════════════════════
+   ADDITIONS — multi-page support
+   ══════════════════════════════════════════════════════ */
+
+/* .card-btn used as <a> tag on index.html — remove underline */
+a.card-btn {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+
+/* 3-column stats-row override — used on homepage Why section,
+   testimonials, mission, team cards */
+.stats-row.cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* 4-column stats-row override — used on products assurance strip */
+.stats-row.cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Team / testimonial cards use .about-visual but need left-align option */
+.about-visual.left {
+  text-align: left;
+}
+
+/* FAQ grid uses .about-grid but should not force centre-alignment */
+.about-grid.top-align {
+  align-items: start;
+}
+
+/* Responsive fixes for new 3-col and 4-col grids */
+@media (max-width: 900px) {
+  .stats-row[style*="repeat(4"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .stats-row[style*="repeat(3"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-row[style*="repeat(4"] {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .stats-row[style*="repeat(3"] {
+    grid-template-columns: 1fr !important;
+  }
+  /* About-grid used for FAQ two-column layout */
+  .about-grid[style*="gap: 24px"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Page hero banner — used on about, products, contact pages.
+   Overrides the global section padding so the inline padding values take effect. */
+.page-hero {
+  padding: 0 !important;
 }
